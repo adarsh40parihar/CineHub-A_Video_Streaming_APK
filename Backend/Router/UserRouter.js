@@ -1,13 +1,22 @@
 const express = require('express');
-const userRouter = express.Router();
+const UserRouter = express.Router();
 
-const { createUser, getUser, getAllUser, deleteUser, } = require("../controller/userController");
-const { protectRouteMiddleware, isAdminMiddleWare } = require('../controller/authController');
+const {
+  getCurrentUser,
+  getAllUser,
+  deleteUser,
+  isAdminMiddleWare,
+  addToWishList,
+  getUserWishList,
+} = require("../Controllers/UserController");
 
-userRouter
-    .post("/", createUser)
-    .get("/:userId", getUser)
-    .get("/", protectRouteMiddleware, isAdminMiddleWare, getAllUser)
-    .delete("/:userId", protectRouteMiddleware, deleteUser);
+const { protectRouteMiddleware} = require('../Controllers/AuthController');
 
-module.exports = userRouter;
+UserRouter.use(protectRouteMiddleware)
+  .get("/", getCurrentUser)
+  .get("/", isAdminMiddleWare, getAllUser)
+  .delete("/", deleteUser)
+  .post("/wishList", addToWishList)
+  .get("/wishList", getUserWishList);
+
+module.exports = UserRouter;

@@ -107,17 +107,19 @@ const loginHandler = async function (req, res) {
 };
 
 //protected route
-const protectRouteMiddleware = async (req, res, next) => {
+const protectRouteMiddleware = async function (req, res, next) {
   try {
-    if (req.cookies && req.cookies.jwt) {
-      const decryptedToken = await tokenVerificaton(req, res);
-      req.id = decryptedToken.id;
+    let jwttoken = req.cookies.jwt;
+    if (!jwttoken) throw new Error("UnAuthorized!");
+
+    let decryptedToken = await tokenVerificaton(jwttoken, JWT_SECRET_KEY);
+
+    if (decryptedToken) {
+      let userId = decryptedToken.id;
+      // adding the userId to the req object
+      req.userId = userId;
+      console.log("authenticated");
       next();
-    } else {
-      return res.status(401).json({
-        message: "unauthorized access",
-        status: "failure",
-      });
     }
   } catch (err) {
     res.status(500).json({
@@ -286,7 +288,12 @@ const resetPasswordHandler = async (req, res) => {
       status: "success",
       message: "password reset successfully",
     });
-  } catch (err) {}
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+      status: "failure",
+    });
+  }
 };
 
 const logoutHandler = function (req, res) {

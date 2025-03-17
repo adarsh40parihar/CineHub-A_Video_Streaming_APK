@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
 /***********************************UserModel*********************************/
+const wishlistItemSchema = new mongoose.Schema({
+  poster_path: { type: String, required: true },
+  name: { type: String, required: true },
+  id: { type: String, required: true },
+});
 
 const schemaRules = {
   name: {
@@ -34,9 +39,14 @@ const schemaRules = {
     type: Date,
     default: Date.now(),
   },
-  isPremium: {
+  premiumAccess: {
     type: Boolean,
     default: false,
+  },
+  premiumType: {
+    type: String,
+    enum: ["single", "family"],
+    default: null,
   },
   role: {
     type: String,
@@ -50,7 +60,9 @@ const schemaRules = {
   otpExpiry: {
     type: Date,
   },
+  wishlist: [wishlistItemSchema], //added for wishlist
 };
+
 const userSchema = new mongoose.Schema(schemaRules);
 
 // Method to check if password is correct

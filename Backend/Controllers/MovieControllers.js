@@ -1,4 +1,7 @@
-const { tmdbApi, TMDB_ENDPOINT } = require("../Services/TMDB_Services");
+const {
+  tmdbApi,
+  TMDB_ENDPOINT,
+} = require("../../../../Nodejs/Final_code_Auth&User/Services/TMDB_Services");
 
 const getActionMovies = async (req, res) => {
   try {
@@ -63,7 +66,7 @@ const getRomanceMovies = async (req, res) => {
   }
 };
 
-const getAnimeMovies = async (req, res) => { 
+const getAnimeMovies = async (req, res) => {
   try {
     const data = await tmdbApi.get(TMDB_ENDPOINT.fetchAnimeMovies);
 
@@ -72,12 +75,12 @@ const getAnimeMovies = async (req, res) => {
       response: data,
     });
   } catch (err) {
-    res.status(500).json( {
+    res.status(500).json({
       message: err.message,
       status: "failure",
-    })
+    });
   }
-}                                                 
+};
 
 const getMovieDetails = async (req, res) => {
   try {

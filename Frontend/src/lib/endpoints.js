@@ -34,12 +34,11 @@ export const ENDPOINT = {
   getTvShowsDetails: (id) => `/tv/details?id=${id}`,
 
   //user
-  user: "/user",
   addToWishlist: "/user/wishlist",
   getWishlist: "/user/wishlist",
 
   //payment
-  payment: "/payment/order",
+  payment: "/payment/",
   updatePremium: "/payment/update-premium-access",
 
   // streaming urls
