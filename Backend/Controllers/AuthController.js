@@ -1,7 +1,10 @@
 //UserModel
 const UserModel = require("../Model/UserModel");
 // JWT creation and verification
-const { tokenCreation, tokenVerificaton } = require("../Utility/JWT_creation_verfication");
+const {
+  tokenCreation,
+  tokenVerificaton,
+} = require("../Utility/JWT_creation_verfication");
 
 //signUp with Welcome message on Mail
 const signupHandler = async function (req, res) {
@@ -44,13 +47,12 @@ const signupHandler = async function (req, res) {
       toReplaceObject
     );
     console.log("Welcome mail is sent");
-
-  }catch (err) {
-        res.status(500).json({
-            message: err.message,
-            status: "failure",
-        });
-    }
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+      status: "failure",
+    });
+  }
 };
 
 //login
@@ -131,32 +133,15 @@ const getProfileHandler = async (req, res) => {
     const id = req.id;
     const user = await UserModel.findById(id);
     if (!user) {
-    return res.status(404).json({
+      return res.status(404).json({
         message: "user not found",
         status: "failure",
-    });
+      });
     }
     res.status(200).json({
-        message: "profile worked",
-        status: "success",
-        user: user,
-    });
-  } catch (err) {
-        res.status(500).json({
-            message: err.message,
-            status:"failure"
-        })
-
-  }
-};
-
-//logout
-const logOutHandler = async (req, res) => {
-  try {
-    res.clearCookie("jwt", { path: "/" });
-    res.status(200).json({
-      message: "Logged Out successfully",
+      message: "profile worked",
       status: "success",
+      user: user,
     });
   } catch (err) {
     res.status(500).json({
@@ -165,20 +150,6 @@ const logOutHandler = async (req, res) => {
     });
   }
 };
-
-const isAdminMiddleWare = async function (req, res, next) {
-  const id = req.id;
-  const user = await UserModel.findById(id);
-  if (user.role !== "admin") {
-    return res.status(403).json({
-      message: "you are not admin",
-      status: "failure",
-    });
-  } else {
-    next();
-  }
-}
-
 
 // Sending Email for Otp and signup.
 const emailSender = require("../Utility/DynamicEmailSender");
@@ -318,13 +289,26 @@ const resetPasswordHandler = async (req, res) => {
   } catch (err) {}
 };
 
+const logoutHandler = function (req, res) {
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None", // Change to "Strict" if frontend and backend are on same origin
+    path: "/",
+  });
+
+  res.status(200).json({
+    status: "success",
+    message: "User logged out successfully",
+  });
+};
+
 module.exports = {
   signupHandler: signupHandler,
   loginHandler: loginHandler,
   protectRouteMiddleware: protectRouteMiddleware,
   getProfileHandler: getProfileHandler,
-  logOutHandler: logOutHandler,
-  isAdminMiddleWare: isAdminMiddleWare,
   forgetPasswordHandler: forgetPasswordHandler,
   resetPasswordHandler: resetPasswordHandler,
+  logoutHandler: logoutHandler,
 };

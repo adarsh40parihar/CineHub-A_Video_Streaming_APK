@@ -77,9 +77,22 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const isAdminMiddleWare = async function (req, res, next) {
+  const id = req.id;
+  const user = await UserModel.findById(id);
+  if (user.role !== "admin") {
+    return res.status(403).json({
+      message: "you are not admin",
+      status: "failure",
+    });
+  } else {
+    next();
+  }
+};
 module.exports = {
   createUser: createUser,
   getUser: getUser,
   getAllUser: getAllUser,
   deleteUser: deleteUser,
+  isAdminMiddleWare: isAdminMiddleWare,
 };
