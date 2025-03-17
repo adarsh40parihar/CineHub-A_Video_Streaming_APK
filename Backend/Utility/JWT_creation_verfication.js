@@ -4,14 +4,12 @@ const util = require("util");
 const promisify = util.promisify;
 const promisdiedJWTsign = promisify(jwt.sign);
 const promisdiedJWTverify = promisify(jwt.verify);
-const dotenv = require("dotenv");
-dotenv.config({ path: "./Class_6_auth_mvc/.env" }); 
 
 // token creation:
 
 const tokenCreation = async (req, res, id) => {
   //token create
-  const authToken = await promisdiedJWTsign({ id:id }, process.env.SECRET_KEY);
+  const authToken = await promisdiedJWTsign({ id:id }, process.env.JWT_SECRET_KEY);
   // token -> cookie
   res.cookie("jwt", authToken, {
     maxAge: 1000 * 60 * 60 * 24 * 30,  //age => 30 days
@@ -20,22 +18,19 @@ const tokenCreation = async (req, res, id) => {
 };
 
 // token verification
-const tokenVerificaton = async function (req, res) {
+const tokenVerificaton = async function (authToken) {
   try {
-    if (req.cookies && req.cookies.jwt) {
-      const authToken = req.cookies.jwt;
-      const unlockToken = await promisdiedJWTverify(authToken, process.env.SECRET_KEY);
+    if (authToken) {
+      const unlockToken = await promisdiedJWTverify(
+        authToken,
+        process.env.JWT_SECRET_KEY
+      );
       return unlockToken;
     } else {
-      res.status(400).json({
-        message: "No JWT token found",
-      });
+      return { error: "No JWT token found", status: 400 };
     }
   } catch (err) {
-    res.status(401).json({
-      message: "Invalid JWT token",
-      error: err,
-    });
+    return { error: "Invalid JWT token", status: 401 };
   }
 };
 

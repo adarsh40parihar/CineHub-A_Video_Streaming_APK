@@ -1,7 +1,4 @@
-const {
-  tmdbApi,
-  TMDB_ENDPOINT,
-} = require("../../../../Nodejs/Final_code_Auth&User/Services/TMDB_Services");
+const {tmdbApi,TMDB_ENDPOINT,} = require("../Services/TMDB_Services");
 
 const getNowPlaying = async (req, res) => {
   try {

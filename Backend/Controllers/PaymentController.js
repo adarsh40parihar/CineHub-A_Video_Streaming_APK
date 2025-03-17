@@ -12,8 +12,8 @@ const razorpayInstance = new Razorpay({
 
 const getPaymentController = async (req, res) => {
     try {
-        const email = req.body.email;
-        const user = await UserModel.findOne({ email: email });
+        const userId = req.userId;
+        const user = await UserModel.findById(userId);
         if (!user) {
           return res.status(404).json({ error: "User not found." });
         }

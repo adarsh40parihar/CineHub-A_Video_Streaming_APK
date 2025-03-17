@@ -3,5 +3,11 @@ const PaymentRouter = express.Router();
 
 const { getPaymentController, updatePremiumAccessController } = require("../Controllers/PaymentController");
 
-PaymentRouter.post("/:order", getPaymentController);
-PaymentRouter.patch("/updatepremium", updatePremiumAccessController);
+const { protectRouteMiddleware } = require("../Controllers/AuthController");
+
+PaymentRouter
+    .use(protectRouteMiddleware)
+    .patch("/updatepremium", updatePremiumAccessController)
+    .post("/:order", getPaymentController)
+
+module.exports = PaymentRouter;

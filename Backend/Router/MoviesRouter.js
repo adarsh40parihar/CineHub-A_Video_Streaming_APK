@@ -8,12 +8,16 @@ const {
   getAnimeMovies,
 } = require("../Controllers/MovieControllers");
 
+const { protectRouteMiddleware } = require('../Controllers/AuthController');
+
 const MoviesRouter = express.Router();
-MoviesRouter.get("/action", getActionMovies);
-MoviesRouter.get("/comedy", getComedyMovies);
-MoviesRouter.get("/horror", getHorrorMovies);
-MoviesRouter.get("/romance", getRomanceMovies);
-MoviesRouter.get("/anime", getAnimeMovies);
-MoviesRouter.get("/details", getMovieDetails);
+
+MoviesRouter.use(protectRouteMiddleware)
+  .get("/action", getActionMovies)
+  .get("/comedy", getComedyMovies)
+  .get("/horror", getHorrorMovies)
+  .get("/romance", getRomanceMovies)
+  .get("/anime", getAnimeMovies)
+  .get("/details", getMovieDetails);
 
 module.exports = MoviesRouter;

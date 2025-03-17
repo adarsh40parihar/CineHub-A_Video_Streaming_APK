@@ -1,4 +1,4 @@
-const UserModel = require("../Model/userModel");
+const UserModel = require("../Model/UserModel");
 const {
   tmdbApi,
   TMDB_ENDPOINT,
@@ -37,11 +37,11 @@ const getCurrentUser = async (req, res) => {
 
 const getAllUser = async (req, res) => {
   try {
-    const user = await UserModel.find();
+    const users = await UserModel.find();
     // if user is present -> send the resp
-    if (user.length != 0) {
+    if (users.length != 0) {
       res.status(200).json({
-        message: user,
+        message: users,
       });
     } else {
       res.status(404).json({
@@ -76,7 +76,7 @@ const deleteUser = async (req, res) => {
 };
 
 const isAdminMiddleWare = async function (req, res, next) {
-  const id = req.id;
+  const id = req.userId;
   const user = await UserModel.findById(id);
   if (user.role !== "admin") {
     return res.status(403).json({
@@ -125,6 +125,48 @@ const addToWishList = async (req, res) => {
   }
 };
 
+const deleteFromWishlist = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { id } = req.body; // Only need the item ID for deletion
+
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        status: "failure",
+      });
+    }
+
+    // Check if item exists in wishlist before attempting to remove
+    if (!user.wishlist.some((item) => item.id === id)) {
+      return res.status(404).json({
+        message: "Item not found in wishlist",
+        status: "failure",
+      });
+    }
+
+    // Remove the item from wishlist using $pull operator
+    await UserModel.findByIdAndUpdate(
+      userId,
+      { $pull: { wishlist: { id: id } } },
+      { new: true }
+    );
+
+    // Send success response
+    res.status(200).json({
+      status: "success",
+      message: "Item removed from wishlist successfully",
+    });
+  } catch (err) {
+    console.error("Error removing from wishlist:", err);
+    res.status(500).json({
+      status: "failure",
+      message: "Something went wrong on our end",
+    });
+  }
+};
+
 const getUserWishList = async (req, res) => {
   try {
     const userId = req.userId;
@@ -146,5 +188,6 @@ module.exports = {
   deleteUser: deleteUser,
   isAdminMiddleWare: isAdminMiddleWare,
   addToWishList: addToWishList,
+  deleteFromWishlist:deleteFromWishlist,
   getUserWishList: getUserWishList,
 };

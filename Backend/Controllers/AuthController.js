@@ -1,10 +1,10 @@
 //UserModel
 const UserModel = require("../Model/UserModel");
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+
 // JWT creation and verification
-const {
-  tokenCreation,
-  tokenVerificaton,
-} = require("../Utility/JWT_creation_verfication");
+const { tokenCreation, tokenVerificaton } = require("../Utility/JWT_creation_verfication");
+
 
 //signUp with Welcome message on Mail
 const signupHandler = async function (req, res) {
@@ -80,14 +80,6 @@ const loginHandler = async function (req, res) {
     // Remove password from response
     const userResponse = user.toObject();
     delete userResponse.password;
-    // if there is already a cookie
-    if (req.cookies && req.cookies.jwt) {
-      return res.status(200).json({
-        message: "Logged In, No JWT token creation required",
-        status: "success",
-        user: userResponse,
-      });
-    }
 
     id = user["_id"];
     // generate token
@@ -110,22 +102,27 @@ const loginHandler = async function (req, res) {
 const protectRouteMiddleware = async function (req, res, next) {
   try {
     let jwttoken = req.cookies.jwt;
+    
     if (!jwttoken) throw new Error("UnAuthorized!");
 
-    let decryptedToken = await tokenVerificaton(jwttoken, JWT_SECRET_KEY);
+    let decryptedToken = await tokenVerificaton(jwttoken);
 
-    if (decryptedToken) {
+    if (decryptedToken.error) {
+      return res.status(decryptedToken.status).json({
+        message: decryptedToken.error,
+        status: "failure",
+      });
+    }
       let userId = decryptedToken.id;
       // adding the userId to the req object
       req.userId = userId;
-      console.log("authenticated");
+      // console.log("authenticated");
       next();
-    }
   } catch (err) {
-    res.status(500).json({
-      message: err.message,
-      status: "failure",
-    });
+      return res.status(500).json({
+        message: err.message,
+        status: "failure",
+      });
   }
 };
 

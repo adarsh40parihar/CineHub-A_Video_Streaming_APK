@@ -6,7 +6,7 @@ const {
   getDramaTvShows,
   getMysteryTvShows,
   getTvShowDetails,
-} = require("../controllers/TvController");
+} = require("../Controllers/TvController");
 
 const TvShowsRouter = express.Router();
 TvShowsRouter.get("/action", getActionTvShows);

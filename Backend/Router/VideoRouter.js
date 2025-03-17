@@ -7,5 +7,5 @@ const {
 /***********routes**************/
 
 VideoRouter.get("/", getAllVideos);
-VideoRouter.get("/watch", getVideoStream);
+VideoRouter.get("/watch", getVideoStream);   //not verified yet
 module.exports = VideoRouter;

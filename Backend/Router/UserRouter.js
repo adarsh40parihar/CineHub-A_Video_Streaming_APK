@@ -8,15 +8,18 @@ const {
   isAdminMiddleWare,
   addToWishList,
   getUserWishList,
+  deleteFromWishlist,
 } = require("../Controllers/UserController");
 
 const { protectRouteMiddleware} = require('../Controllers/AuthController');
 
-UserRouter.use(protectRouteMiddleware)
+UserRouter
+  .use(protectRouteMiddleware)
   .get("/", getCurrentUser)
-  .get("/", isAdminMiddleWare, getAllUser)
+  .get("/all", isAdminMiddleWare, getAllUser)
   .delete("/", deleteUser)
   .post("/wishList", addToWishList)
+  .delete("/wishList", deleteFromWishlist)
   .get("/wishList", getUserWishList);
 
 module.exports = UserRouter;
