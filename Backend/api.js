@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 dotenv.config(); 
+const cookieParser = require("cookie-parser");
 
 /***********************************Connection*********************************/
 const mongoose = require("mongoose");
@@ -18,19 +19,22 @@ mongoose
 
 
 app.use(express.json());
-
+app.use(cookieParser());
+ 
 const AuthRouter = require("./Router/AuthRouter");
-// const UserRouter = require("./Router/UserRouter");
-// const moviesRouter = require("./Router/MoviesRouter");
+const MoviesRouter = require("./Router/MoviesRouter");
+const DiscoverRouter = require("./Router/DiscoverRouter");
+// const TvShowsRouter = require("./Router/TvRouter");
 
 
 app.use("/api/auth/", AuthRouter);
-// app.use("/api/user", UserRouter);
-// app.use("/api/movies", moviesRouter);
+app.use("/api/movies", MoviesRouter);
+app.use("/api/discover", DiscoverRouter);
+// app.use("/api/tvshows", TvShowsRouter);
 
 
 
 const PORT = process.env.PORT || 3000;
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log(`server is running at Port ${PORT}.`);
 });

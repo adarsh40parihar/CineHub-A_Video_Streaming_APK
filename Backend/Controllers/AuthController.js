@@ -78,6 +78,14 @@ const loginHandler = async function (req, res) {
     // Remove password from response
     const userResponse = user.toObject();
     delete userResponse.password;
+    // if there is already a cookie
+    if (req.cookies && req.cookies.jwt) {
+      return res.status(200).json({
+        message: "Logged In, No JWT token creation required",
+        status: "success",
+        user: userResponse,
+      });
+    }
 
     id = user["_id"];
     // generate token

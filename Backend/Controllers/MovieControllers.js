@@ -1,4 +1,4 @@
-const { tmdbApi, TMDB_ENDPOINT } = require("../services/tmdb.services.js");
+const { tmdbApi, TMDB_ENDPOINT } = require("../Services/TMDB_Services");
 
 const getActionMovies = async (req, res) => {
   try {
@@ -63,28 +63,27 @@ const getRomanceMovies = async (req, res) => {
   }
 };
 
-const getAnimeMovies = async (req, res) => {
+const getAnimeMovies = async (req, res) => { 
   try {
     const data = await tmdbApi.get(TMDB_ENDPOINT.fetchAnimeMovies);
 
     res.status(200).json({
-      status: "success",
+      message: "success",
       response: data,
     });
   } catch (err) {
-    res.status(500).json({
+    res.status(500).json( {
       message: err.message,
       status: "failure",
-    });
+    })
   }
-};
+}                                                 
 
 const getMovieDetails = async (req, res) => {
   try {
     const { id } = req.query;
     if (!id) throw new Error("Video Id is not defined.");
     const details = await tmdbApi.get(TMDB_ENDPOINT.fetchMovieVideos(id));
-
     res.status(200).json({
       status: "success",
       data: details,

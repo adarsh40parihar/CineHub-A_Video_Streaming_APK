@@ -6,7 +6,7 @@ const {
   getMovieDetails,
   getRomanceMovies,
   getAnimeMovies,
-} = require("../controllers/MovieController");
+} = require("../Controllers/MovieControllers");
 
 const MoviesRouter = express.Router();
 MoviesRouter.get("/action", getActionMovies);
