@@ -8,7 +8,7 @@ function JumperSection(props) {
       {list.map((item) => (
         <Link
           key={item.href}
-          className="px-3 py-2 rounded-full text-white bg-black  text-sm over-scroll font-bold scrollbar-hide" //bg-white/15  real bg
+          className="px-3 py-2 rounded-full bg-white/15  text-sm over-scroll font-bold scrollbar-hide" //bg-white/15  real bg
           href={`#${item.href}`}
         >
           {item.label}

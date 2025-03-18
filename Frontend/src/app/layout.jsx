@@ -2,6 +2,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Section/Header";
 import Footer from "@/components/Section/Footer";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
 
 
 const geistSans = Geist({
@@ -23,10 +29,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.className} antialiased`}
       >
         <Header />
-        <main className="mt-[75px">
+        <main className="mt-[72px]">
           {children}
         </main>
         <Footer />
