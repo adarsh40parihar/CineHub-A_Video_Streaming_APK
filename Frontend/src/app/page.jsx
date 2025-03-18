@@ -1,18 +1,33 @@
+import BannerSection from "@/components/Section/BannerSection";
+import CategoriesSection from "@/components/Section/CategoriesSection";
+import JumperSection from "@/components/Section/JumperSection";
+
 function Home() {
+  const list = [
+    {
+      label: "Top Rated",
+      href: "top-rated"
+    },
+    {
+      label: "Popular",
+      href: "popular"
+    },
+    {
+      label: "Upcoming",
+      href: "upcoming"
+    }
+  ];
   return (
-    <div className=" text-pink-500">
-      <h1 className="text-2xl font-bold mb-4">Welcome to Jio Cinema</h1>
-      <h1 className="text-2xl font-bold mb-4">Welcome to Jio Cinema</h1>
-      <h1 className="text-2xl font-bold mb-4">Welcome to Jio Cinema</h1>
-      <h1 className="text-2xl font-bold mb-4">Welcome to Jio Cinema</h1>
-      <h1 className="text-2xl font-bold mb-4">Welcome to Jio Cinema</h1>
-      <h1 className="text-2xl font-bold mb-4">Welcome to Jio Cinema</h1>
-      <h1 className="text-2xl font-bold mb-4">Welcome to Jio Cinema</h1>
-      <p className="mb-4">
-        Enjoy a wide variety of movies, TV shows, and sports.
-      </p>
-      {/* Add more content here to demonstrate the layout */}
-    </div>
+    <>
+      <JumperSection list={list}></JumperSection>
+      <BannerSection></BannerSection>
+          {/* // list of categories  */}
+      {
+        list.map((item) => (
+          <CategoriesSection key={item.label} title={item.label} id={item.href}></CategoriesSection>
+        ))
+      }
+    </>
   );
 }
 export default Home;
