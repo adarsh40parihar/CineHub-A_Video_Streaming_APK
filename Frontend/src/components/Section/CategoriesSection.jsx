@@ -10,7 +10,7 @@ function CategoriesSection(props) {
       </h2>
       <ul className="flex gap-4 w-full overflow-scroll scrollbar-hide ">
         {new Array(12).fill(0).map((e, idx) => (
-          <Skeleton key={idx} className="min-w-[200px] h-[300px] bg-red-100 " />
+          <Skeleton key={idx} className="min-w-[200px] h-[300px]" />
         ))}
       </ul>
     </div>

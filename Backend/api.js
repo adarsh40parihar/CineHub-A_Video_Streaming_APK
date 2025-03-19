@@ -4,6 +4,10 @@ const dotenv = require("dotenv");
 dotenv.config(); 
 const cookieParser = require("cookie-parser");
 
+// allowing frontend to access the api
+const cors = require("cors");
+app.use(cors());
+
 /***********************************Connection*********************************/
 const mongoose = require("mongoose");
 
