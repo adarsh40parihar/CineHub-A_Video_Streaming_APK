@@ -8,7 +8,12 @@ const {
   getTvShowDetails,
 } = require("../Controllers/TvController");
 
+const { protectRouteMiddleware } = require("../Controllers/AuthController");
+
+
 const TvShowsRouter = express.Router();
+
+// TvShowsRouter.use(protectRouteMiddleware);  // to protect routes
 TvShowsRouter.get("/action", getActionTvShows);
 TvShowsRouter.get("/comedy", getComedyTvShows);
 TvShowsRouter.get("/crime", getCrimeTvShows);

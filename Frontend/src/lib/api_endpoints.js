@@ -46,16 +46,24 @@ export const ENDPOINT = {
   fetchStreamingVideo: (id) => `/video?id=${id}`,
 };
 
+export const PosterFetcher = (path) => {
+  return "https://image.tmdb.org/t/p/original" + path;
+
+} 
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
 });
-export async function getBannerData() {
+
+
+export async function getWatchURL() {
   const res = await api.get(ENDPOINT.discoverNowPlaying);
   const data = res?.data?.response?.results;
   return data;
 }
+
+
 
 

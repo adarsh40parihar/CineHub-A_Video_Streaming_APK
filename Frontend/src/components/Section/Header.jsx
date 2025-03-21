@@ -65,14 +65,14 @@ export default function Header() {
           <div
             className={`relative flex items-center bg-[#121212] border rounded-full px-3 py-2 transition-all duration-200 ${
               isSearchFocused
-                ? "border-gray-500 shadow-md w-80"
-                : "border-gray-700 hover:border-gray-600 w-72"
+                ? "border-gray-500 shadow-md w-full sm:w-80"
+                : "border-gray-700 hover:border-gray-600 w-full sm:w-72"
             }`}
           >
             <Search className="h-5 w-5 text-gray-500 mr-2" />
             <input
               type="text"
-              placeholder="Movies, Shows and more"
+              placeholder="Search..."
               className="bg-transparent outline-none w-full text-sm font-semibold text-gray-300 placeholder-gray-500"
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}

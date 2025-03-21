@@ -1,4 +1,4 @@
-import { getBannerData } from '@/lib/api_endpoints';
+import { PosterFetcher } from "@/lib/api_endpoints";
 import React, { Suspense } from 'react'
 import { Skeleton } from '../ui/skeleton';
 import {
@@ -10,16 +10,26 @@ import {
 } from "@/components/ui/carousel";
 import Image from 'next/image';
 
-const ImageBaseURL = "https://image.tmdb.org/t/p/original";
-
-async function BannerSection() {
-  return <Suspense fallback={<BannerSectionFallback/>}>
-    <BannerSectionContent/>
-  </Suspense>;
+async function BannerSection({fetcher}) {
+  return (
+    <Suspense fallback={<BannerSectionFallback />}>
+      <BannerSectionContent fetcher={fetcher} />
+    </Suspense>
+  );
 }
-async function BannerSectionContent() {
-  const data = await getBannerData();
-  console.log(data)
+async function BannerSectionContent({ fetcher }) {
+  const data = await fetcher();
+      if (!data || data.length === 0) {
+        return (
+          <div className="flex flex-col items-center justify-center w-full h-[150px] sm:h-[200px] md:h-[300px] py-12">
+            <InboxIcon
+              className="w-32 h-32 text-slate-400 mb-10"
+              strokeWidth={1.2}
+            />
+            <p className="text-lg text-gray-500">No items found.</p>
+          </div>
+        );
+      }
   return (
     <div>
       <Carousel
@@ -30,14 +40,13 @@ async function BannerSectionContent() {
         className="w-full md:px-0 px-4"
       >
         <CarouselContent className="">
-          {data.map((vid, i = 0) => (
+          {data.map((vid) => (
             <CarouselItem
               className="w-full max-w-[554px] h-[312px]"
               key={vid.id}
             >
-              
               <Image
-                src={ImageBaseURL + vid?.poster_path}
+                src={PosterFetcher(vid?.poster_path)}
                 alt=""
                 width={700}
                 height={500}
@@ -47,7 +56,7 @@ async function BannerSectionContent() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <div className="absolute bottom-1 right-[12%] hidden md:flex">
+        <div className="absolute bottom-2  right-[12%] hidden md:flex">
           <CarouselPrevious className="h-[45px] w-[45px]" />
           <CarouselNext className="h-[45px] w-[45px]" />
         </div>

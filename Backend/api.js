@@ -37,7 +37,7 @@ app.use("/api/auth/", AuthRouter); //✅
 app.use("/api/user", UserRouter);  //✅
 app.use("/api/movies", MoviesRouter); //✅
 app.use("/api/discover", DiscoverRouter);//✅
-app.use("/api/tvshows", TvShowsRouter);//✅
+app.use("/api/tv", TvShowsRouter);//✅
 app.use("/api/payment", PaymentRouter);//✅
 app.use("/api/videos", VideoRouter);  // ❌ not verified yet
 

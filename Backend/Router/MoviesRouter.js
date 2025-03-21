@@ -11,8 +11,8 @@ const {
 const { protectRouteMiddleware } = require('../Controllers/AuthController');
 
 const MoviesRouter = express.Router();
-
-MoviesRouter.use(protectRouteMiddleware)
+// MoviesRouter.use(protectRouteMiddleware);
+MoviesRouter
   .get("/action", getActionMovies)
   .get("/comedy", getComedyMovies)
   .get("/horror", getHorrorMovies)
