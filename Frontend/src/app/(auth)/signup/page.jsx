@@ -12,16 +12,51 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { api, ENDPOINT } from "@/lib/api_endpoints";
+import { LucideLoader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
     const onSubmit = async () => {
-      alert("onSubmit");
-    };
+      try {
+          if (!name || !email || !password || !confirmPassword) {
+            alert("Please fill the fields");
+            return;
+          }
+          if (password !== confirmPassword) {
+             alert("Password & Confirm Password are not same");
+             return;
+           }
+          
+          setLoading(true);
+          const res = await api.post(ENDPOINT.signup, {
+            email: email,
+            password: password,
+            name: name,
+            confirmPassword: confirmPassword
+          });
+          console.log(res)
+          if (res.data.status === "success") {
+            // i am logged in
+            // do whatever you want
+            router.push("/");
+            alert("login successfull");
+          }
+        } catch (err) {
+          console.log("err: ", err);
+          // alert("Invalid creds");
+
+        } finally {
+          setLoading(false);
+        }
+      };
   
   return (
     <div className="h-screen pb-[100px] flex items-center justify-center">
@@ -75,6 +110,9 @@ function Signup() {
             </div>
             <Button onClick={onSubmit} className="w-full">
               Create an account
+              {loading && (
+                <LucideLoader2 className="animate-spin w-4 h-4" />
+              )}
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">

@@ -10,7 +10,7 @@ const { tokenCreation, tokenVerificaton } = require("../Utility/JWT_creation_ver
 const signupHandler = async function (req, res) {
   try {
     const userObject = req.body;
-    if (!userObject.email || !userObject.password || !userObject.name) {
+    if (!userObject.email || !userObject.password || !userObject.confirmPassword  || !userObject.name) {
       // 1. user -> data get, check email, password
       return res.status(400).json({
         message: "required data missing",

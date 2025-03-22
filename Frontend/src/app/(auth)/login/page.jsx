@@ -14,13 +14,44 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { api, ENDPOINT } from "@/lib/api_endpoints";
+import { LucideLoader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const onSubmit = async () => {
-    alert("onSubmit")
+    try {
+      if (!email || !password) {
+        alert("Please fill the fields");
+        return;
+      }
+
+      setLoading(true);
+
+      const res = await api.post(ENDPOINT.login, {
+        email: email,
+        password: password,
+      });
+
+      if (res.data.status === "success") {
+        // i am logged in
+        // do whatever you want
+        router.push('/');
+        alert("login successfull")
+      }
+
+    } catch (err) {
+      console.log("err: ", err);
+      alert("Invalid creds");
+
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -57,7 +88,8 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter>
           <Button onClick={onSubmit} className="w-full">
-            Sign in{" "}
+            Sign in
+            {loading && <LucideLoader2 className="animate-spin w-4 h-4" />}
           </Button>
         </CardFooter>
         <div className="mt-4 text-center text-sm pb-6 flex justify-between px-6">

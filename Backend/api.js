@@ -6,7 +6,12 @@ const cookieParser = require("cookie-parser");
 
 // allowing frontend to access the api
 const cors = require("cors");
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Replace with your frontend's origin
+    credentials: true,
+  })
+);
 
 /***********************************Connection*********************************/
 const mongoose = require("mongoose");
