@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Search, ChevronDown, Mic, User } from "lucide-react";
 // Remove the inappropriate import
 // import { href, NavLink } from "react-router-dom";
-// import ProfileSheet from "../atom/ProfileSheet";
+import ProfileSheet from "@/components/Section/ProfileSheet";
 
 export const navLinks = [
   { name: "Home", key: "", href: "/" },
@@ -39,7 +39,7 @@ export default function Header() {
 
           <Link
             href="/subscription"
-            className="ml-4 mr-4 md:px-4 px-4 py-1 font-medium rounded-3xl flex items-center gap-2 text-[#c1a362] border-[#c1a362] border text-sm md:text-base"
+            className="ml-4 mr-4 md:px-4 px-4 py-1 font-medium rounded-3xl hidden sm:flex items-center gap-2 text-[#c1a362] border-[#c1a362] border text-sm md:text-base"
           >
             <Image src="/crown.svg" height={16} width={16} alt="crown" />
             <span className="pr-4">Go Premium</span>
@@ -65,8 +65,8 @@ export default function Header() {
           <div
             className={`relative flex items-center bg-[#121212] border rounded-full px-3 py-2 transition-all duration-200 ${
               isSearchFocused
-                ? "border-gray-500 shadow-md w-full sm:w-80"
-                : "border-gray-700 hover:border-gray-600 w-full sm:w-72"
+                ? "border-gray-500 shadow-md w-full sm:w-72"
+                : "border-gray-700 hover:border-gray-600 w-full sm:w-60"
             }`}
           >
             <Search className="h-5 w-5 text-gray-500 mr-2" />
@@ -79,7 +79,7 @@ export default function Header() {
             />
             <Mic className="h-5 w-5 text-gray-500 ml-1 cursor-pointer" />
           </div>
-          {/* <ProfileSheet /> */}
+          <ProfileSheet />
         </div>
       </div>
     </header>
