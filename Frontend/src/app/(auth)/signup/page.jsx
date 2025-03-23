@@ -11,10 +11,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api, ENDPOINT } from "@/lib/api_endpoints";
 import { LucideLoader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import UserSlice from "@/components/Redux/Slice/UserSlice";
+const actions = UserSlice.actions;
 
 function Signup() {
   const [name, setName] = useState("");
@@ -23,6 +26,15 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+    const dispatch = useDispatch();
+    const { user, isLoggedIn } = useSelector((state) => state.user);
+  
+    useEffect(() => {
+      if (isLoggedIn) {
+        router.push("/");
+      }
+    }, [isLoggedIn, router]);
 
     const onSubmit = async () => {
       try {
@@ -42,10 +54,10 @@ function Signup() {
             name: name,
             confirmPassword: confirmPassword
           });
-          console.log(res)
-          if (res.data.status === "success") {
+          if (res.data.status === "Created") {
             // i am logged in
             // do whatever you want
+            dispatch(actions.userLoggedInDetails(res.data.user));
             router.push("/");
             alert("login successfull");
           }
@@ -54,7 +66,7 @@ function Signup() {
           // alert("Invalid creds");
 
         } finally {
-          setLoading(false);
+            setLoading(false);
         }
       };
   

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -17,12 +17,24 @@ import Link from "next/link";
 import { api, ENDPOINT } from "@/lib/api_endpoints";
 import { LucideLoader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import UserSlice from "@/components/Redux/Slice/UserSlice";
+const actions = UserSlice.actions;
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  const dispatch = useDispatch();
+  const { user, isLoggedIn } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/");
+    }
+  }, [isLoggedIn, router]);
 
   const onSubmit = async () => {
     try {
@@ -40,15 +52,13 @@ export default function LoginPage() {
 
       if (res.data.status === "success") {
         // i am logged in
-        // do whatever you want
-        router.push('/');
-        alert("login successfull")
+        dispatch(actions.userLoggedInDetails(res.data.user));
+        router.push("/");
+        alert("login successfull");
       }
-
     } catch (err) {
       console.log("err: ", err);
       alert("Invalid creds");
-
     } finally {
       setLoading(false);
     }
