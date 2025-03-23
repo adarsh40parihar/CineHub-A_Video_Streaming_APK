@@ -1,17 +1,25 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
-dotenv.config(); 
 const cookieParser = require("cookie-parser");
+const morgan = require("morgan");
+
+dotenv.config(); 
+
+app.use(express.json());
+app.use(cookieParser());
+
+app.use(morgan("dev"));   //logger for debugging
 
 // allowing frontend to access the api
 const cors = require("cors");
-app.use(
-  cors({
-    origin: "http://localhost:3000", // Replace with your frontend's origin
-    credentials: true,
-  })
-);
+const corsConfig = {
+  origin: "http://localhost:3000",// Replace with your frontend's origin
+  credentials: true,
+};
+app.use(cors(corsConfig));
+app.options("*", cors(corsConfig));
+
 
 /***********************************Connection*********************************/
 const mongoose = require("mongoose");
@@ -27,8 +35,6 @@ mongoose
   .catch((err) => console.log("Error connecting to the database:", err));
 
 
-app.use(express.json());
-app.use(cookieParser());
  
 const AuthRouter = require("./Router/AuthRouter");  
 const UserRouter = require("./Router/UserRouter");
