@@ -1,4 +1,4 @@
-import { PosterFetcher } from "@/lib/api_endpoints";
+import { getWatchURL, PosterFetcher } from "@/lib/api_endpoints";
 import React, { Suspense } from 'react'
 import { Skeleton } from '../ui/skeleton';
 import {
@@ -9,6 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from 'next/image';
+import Link from "next/link";
 
 async function BannerSection({fetcher}) {
   return (
@@ -45,14 +46,17 @@ async function BannerSectionContent({ fetcher }) {
               className="w-full max-w-[554px] h-[312px]"
               key={vid.id}
             >
-              <Image
-                src={PosterFetcher(vid?.poster_path)}
-                alt=""
-                width={700}
-                height={500}
-                className="w-full h-full bg-slate-600 rounded-lg object-cover"
-                quality={30}
-              />
+              <Link href={getWatchURL(vid?.id, vid?.media_type)} key={vid.id}>
+                {console.log("URL :", getWatchURL(vid?.id, vid?.media_type))}
+                <Image
+                  src={PosterFetcher(vid?.poster_path)}
+                  alt=""
+                  width={700}
+                  height={500}
+                  className="w-full h-full bg-slate-600 rounded-lg object-cover"
+                  quality={30}
+                />
+              </Link>
             </CarouselItem>
           ))}
         </CarouselContent>

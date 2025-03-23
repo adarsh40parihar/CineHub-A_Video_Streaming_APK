@@ -60,10 +60,11 @@ export const api = axios.create({
 });
 
 
-export async function getWatchURL() {
-  const res = await api.get(ENDPOINT.discoverNowPlaying);
-  const data = res?.data?.response?.results;
-  return data;
+
+//By clicking the banner get the id of that banner.
+export function getWatchURL(vidId, mediaType) {
+  const prefix = mediaType === "tv" ? "tv" : "movies";
+  return `${prefix}/watch?id=${vidId}`;
 }
 
 

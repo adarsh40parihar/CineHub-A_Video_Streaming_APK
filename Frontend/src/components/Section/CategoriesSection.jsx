@@ -1,8 +1,9 @@
 import React, { Suspense } from 'react'
 import { Skeleton } from '../ui/skeleton';
 import Image from 'next/image';
-import { PosterFetcher } from '@/lib/api_endpoints';
+import { getWatchURL, PosterFetcher } from '@/lib/api_endpoints';
 import { InboxIcon } from 'lucide-react';
+import Link from 'next/link';
 
 async function CategoriesSection(props) {
     const { title, id } = props;
@@ -35,14 +36,16 @@ async function CategoriesSectionContent(props) {
   return (
     <ul className="flex gap-4 w-full overflow-scroll scrollbar-hide ">
       {data.map((vid) => (
-        <Image
-          key={vid.id}
-          src={PosterFetcher(vid?.poster_path)}
-          width={200}
-          height={300}
-          alt=""
-          className="min-w-[100px] sm:min-w-[150px] md:min-w-[200px] h-[150px] sm:h-[200px] md:h-[300px] rounded-lg bg-slate-600"
-        ></Image>
+        <Link href={getWatchURL(vid?.id, vid?.media_type)} key={vid.id}>
+          <Image
+            key={vid.id}
+            src={PosterFetcher(vid?.poster_path)}
+            width={200}
+            height={300}
+            alt=""
+            className="min-w-[100px] sm:min-w-[150px] md:min-w-[200px] h-[150px] sm:h-[200px] md:h-[300px] rounded-lg bg-slate-600"
+          ></Image>
+        </Link>
       ))}
     </ul>
   );
