@@ -1,6 +1,8 @@
+import ShareButton from '@/components/atoms/ShareButton';
+import WishListButton from '@/components/atoms/WishListButton';
 import { Button } from '@/components/ui/button';
 import { api, ENDPOINT } from '@/lib/api_endpoints';
-import { FileVideo } from 'lucide-react';
+import { FileVideo, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
 
@@ -15,8 +17,12 @@ const MoviesWatch = async ({searchParams: {id}}) =>{
             src={`https://www.youtube.com/embed/${details.key}`}
             allowFullScreen
           />
-          <div className="flex flex-wrap gap-4 px-4 lg:px-10 py-8 items-center">
+          <div className="flex flex-wrap gap-4 px-4 lg:px-10 py-8 items-center justify-between">
             <h1 className="text-2xl font-bold">{details.name}</h1>
+            <div className='flex gap-3'>
+              <WishListButton />
+              <ShareButton/>
+            </div>
           </div>
         </div>
       ) : (

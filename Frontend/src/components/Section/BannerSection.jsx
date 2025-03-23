@@ -47,7 +47,6 @@ async function BannerSectionContent({ fetcher }) {
               key={vid.id}
             >
               <Link href={getWatchURL(vid?.id, vid?.media_type)} key={vid.id}>
-                {console.log("URL :", getWatchURL(vid?.id, vid?.media_type))}
                 <Image
                   src={PosterFetcher(vid?.poster_path)}
                   alt=""
