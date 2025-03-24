@@ -36,7 +36,10 @@ async function CategoriesSectionContent(props) {
   return (
     <ul className="flex gap-4 w-full overflow-scroll scrollbar-hide ">
       {data.map((vid) => (
-        <Link href={getWatchURL(vid?.id, vid?.media_type)} key={vid.id}>
+        <Link
+          href={getWatchURL(vid?.id, vid?.media_type, vid?.poster_path)}
+          key={vid.id}
+        >
           <Image
             key={vid.id}
             src={PosterFetcher(vid?.poster_path)}

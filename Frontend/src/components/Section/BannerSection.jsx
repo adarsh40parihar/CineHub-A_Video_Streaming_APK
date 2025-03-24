@@ -46,7 +46,10 @@ async function BannerSectionContent({ fetcher }) {
               className="w-full max-w-[554px] h-[312px]"
               key={vid.id}
             >
-              <Link href={getWatchURL(vid?.id, vid?.media_type)} key={vid.id}>
+              <Link
+                href={getWatchURL(vid?.id, vid?.media_type, vid?.poster_path)}
+                key={vid.id}
+              >
                 <Image
                   src={PosterFetcher(vid?.poster_path)}
                   alt=""

@@ -36,6 +36,7 @@ export const ENDPOINT = {
   //user
   addToWishlist: "/user/wishlist",
   getWishlist: "/user/wishlist",
+  deleteFromWishlist: "/user/wishlist",
 
   //payment
   payment: "/payment/",
@@ -62,9 +63,9 @@ export const api = axios.create({
 
 
 //By clicking the banner get the id of that banner.
-export function getWatchURL(vidId, mediaType) {
+export function getWatchURL(vidId, mediaType, poster_path) {
   const prefix = mediaType === "tv" ? "tv" : "movies";
-  return `${prefix}/watch?id=${vidId}`;
+  return `${prefix}/watch?id=${vidId}&poster_path=${poster_path}`;
 }
 
 

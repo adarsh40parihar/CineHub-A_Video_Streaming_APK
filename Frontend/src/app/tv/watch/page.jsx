@@ -6,8 +6,9 @@ import { FileVideo } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
 
-const TvWatch = async ({searchParams: {id}}) =>{
-  const details = (await api.get(ENDPOINT.getTvShowsDetails(id))).data.data.results?.[0];
+const TvWatch = async ({ searchParams: { id, poster_path } }) => {
+  const details = (await api.get(ENDPOINT.getTvShowsDetails(id))).data.data
+    .results?.[0];
   return (
     <div>
       {details ? (
@@ -20,7 +21,14 @@ const TvWatch = async ({searchParams: {id}}) =>{
           <div className="flex flex-wrap gap-4 px-4 lg:px-10 py-8 items-center justify-between">
             <h1 className="text-2xl font-bold">{details.name}</h1>
             <div className="flex gap-3">
-              <WishListButton />
+              <WishListButton
+                wishlist={{
+                  id,
+                  poster_path,
+                  name: details.name,
+                  media_type: details.media_type || "tv",
+                }}
+              />
               <ShareButton />
             </div>
           </div>
@@ -36,6 +44,6 @@ const TvWatch = async ({searchParams: {id}}) =>{
       )}
     </div>
   );
-}
+};
 
 export default TvWatch;

@@ -16,6 +16,7 @@ import { navLinks } from "./Header";
 import { useDispatch, useSelector } from "react-redux";
 import UserSlice from "@/components/Redux/Slice/UserSlice";
 import { useRouter } from "next/navigation";
+import { api, ENDPOINT } from "@/lib/api_endpoints";
 const actions = UserSlice.actions;
 
 
@@ -27,12 +28,16 @@ function SheetSide() {
 
   const dispatch = useDispatch();
   const router = useRouter();
-  const signOut = () => {
-    dispatch(actions.userLoggedOutDetails());
-    setOpen(false);
-    router.push("/");
+  const signOut = async () => {
+    try {
+      await api.get(ENDPOINT.logout);
+      dispatch(actions.userLoggedOutDetails());
+      setOpen(false);
+      router.push("/");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   }
- 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>

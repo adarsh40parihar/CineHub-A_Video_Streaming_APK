@@ -6,7 +6,7 @@ import { FileVideo, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
 
-const MoviesWatch = async ({searchParams: {id}}) =>{
+const MoviesWatch = async ({searchParams: {id,poster_path}}) =>{
   const details = (await api.get(ENDPOINT.getMovieDetails(id))).data.data.results?.[0];
   return (
     <div>
@@ -19,9 +19,16 @@ const MoviesWatch = async ({searchParams: {id}}) =>{
           />
           <div className="flex flex-wrap gap-4 px-4 lg:px-10 py-8 items-center justify-between">
             <h1 className="text-2xl font-bold">{details.name}</h1>
-            <div className='flex gap-3'>
-              <WishListButton />
-              <ShareButton/>
+            <div className="flex gap-3">
+              <WishListButton
+                wishlist={{
+                  id,
+                  poster_path,
+                  name: details.name,
+                  media_type: details.media_type || "movies",
+                }}
+              />
+              <ShareButton />
             </div>
           </div>
         </div>
