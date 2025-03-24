@@ -4,6 +4,7 @@ import Header from "@/components/Section/Header";
 import Footer from "@/components/Section/Footer";
 import { Inter } from "next/font/google";
 import StoreProvider from "@/components/Provider/StoreProvider";
+import AuthProvider from "@/components/Provider/AuthProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -30,13 +31,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} antialiased`}>
-
         <StoreProvider>
-          <Header />
-          <main className="mt-[72px]">{children}</main>
-          <Footer />
+          <AuthProvider>
+            <Header />
+            <main className="mt-[72px]">{children}</main>
+            <Footer />
+          </AuthProvider>
         </StoreProvider>
-        
       </body>
     </html>
   );

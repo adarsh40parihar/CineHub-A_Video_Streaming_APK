@@ -68,7 +68,7 @@ function SheetSide() {
           {isLoggedIn ? (
             <Link
               href={"/resetPassword"}
-              className="flex items-center justify-centre px-2 text-sm text-gray-500 hover:text-gray-300"
+              className="flex items-center justify-centre pl-4 text-sm text-gray-500 hover:text-gray-300"
               onClick={() => {
                 setOpen(false);
               }}
