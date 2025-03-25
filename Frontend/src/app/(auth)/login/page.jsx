@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 import {
   Card,
@@ -39,7 +40,7 @@ export default function LoginPage() {
   const onSubmit = async () => {
     try {
       if (!email || !password) {
-        alert("Please fill the fields");
+        toast("Please fill the fields");
         return;
       }
 
@@ -54,11 +55,10 @@ export default function LoginPage() {
         // i am logged in
         dispatch(actions.userLoggedInDetails(res.data.user));
         router.push("/");
-        alert("login successfull");
+        toast("login successfull");
       }
     } catch (err) {
-      console.log("err: ", err);
-      alert("Invalid creds");
+      toast(err?.response?.data?.message);
     } finally {
       setLoading(false);
     }

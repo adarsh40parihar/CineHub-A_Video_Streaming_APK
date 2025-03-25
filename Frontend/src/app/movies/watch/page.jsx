@@ -6,8 +6,10 @@ import { FileVideo, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
 
-const MoviesWatch = async ({searchParams: {id,poster_path}}) =>{
-  const details = (await api.get(ENDPOINT.getMovieDetails(id))).data.data.results?.[0];
+const MoviesWatch = async ({ searchParams }) => {
+  const { id, poster_path } = await searchParams;
+  const details = (await api.get(ENDPOINT.getMovieDetails(id))).data.data
+    .results?.[0];
   return (
     <div>
       {details ? (
@@ -43,6 +45,6 @@ const MoviesWatch = async ({searchParams: {id,poster_path}}) =>{
       )}
     </div>
   );
-}
+};
 
 export default MoviesWatch;

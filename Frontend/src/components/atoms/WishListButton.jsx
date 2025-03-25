@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Button } from '../ui/button';
 import { Check, Loader, PlusIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 function WishListButton({wishlist}) {
   const [loading, setLoading] = useState(false);
@@ -35,7 +36,7 @@ function WishListButton({wishlist}) {
         setLoading(true);
         const res = await api.post(ENDPOINT.addToWishlist,wishlist);
         if (res.data.status == "success") {
-          // alert("Wishlist added successfully");
+          toast("Wishlist added successfully");
           setTick(true);
         }
       } catch (err) {
@@ -51,7 +52,7 @@ function WishListButton({wishlist}) {
           setLoading(true);
           const res = await api.delete(ENDPOINT.deleteFromWishlist, { data: { id: wishlist.id } });
           if (res.data.status == "success") {
-            // alert("Wishlist deleted successfully");
+            toast("Wishlist deleted successfully");
             setTick(false);
           }
         } catch (err) {

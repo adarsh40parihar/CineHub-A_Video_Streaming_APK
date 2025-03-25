@@ -5,6 +5,7 @@ import Footer from "@/components/Section/Footer";
 import { Inter } from "next/font/google";
 import StoreProvider from "@/components/Provider/StoreProvider";
 import AuthProvider from "@/components/Provider/AuthProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -36,6 +37,7 @@ export default function RootLayout({ children }) {
             <Header />
             <main className="mt-[72px]">{children}</main>
             <Footer />
+            <Toaster />
           </AuthProvider>
         </StoreProvider>
       </body>

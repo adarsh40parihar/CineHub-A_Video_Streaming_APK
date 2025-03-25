@@ -200,9 +200,8 @@ const forgetPasswordHandler = async (req, res) => {
     res.status(200).json({
       message: "OTP is send successfully",
       status: "success",
-      otp: otp,
-      resetURL: resetURL,
     });
+
     const subject = "OTP for Resetting your password";
     const toReplaceObject = { name: user.name, otp: user.otp };
     await emailSender(
@@ -212,6 +211,7 @@ const forgetPasswordHandler = async (req, res) => {
       toReplaceObject
     );
     console.log("OTP is sent successfully");
+
   } catch (err) {
     return res.status(500).json({
       message: err.message,
@@ -234,16 +234,14 @@ const resetPasswordHandler = async (req, res) => {
     if (
       !resetDetails.password ||
       !resetDetails.confirmPassword ||
-      !resetDetails.otp ||
-      resetDetails.password != resetDetails.confirmPassword
+      !resetDetails.otp
     ) {
-      res.status(401).json({
+      return res.status(401).json({
         status: "failure",
         message: "invalid request",
       });
     }
-    const userId = req.params.userId;
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findOne({ email: req.body.email });
     if (!user) {
       return res.status(404).json({
         status: "failure",
@@ -254,7 +252,7 @@ const resetPasswordHandler = async (req, res) => {
     if (user.otp == undefined) {
       return res.status(401).json({
         status: "failure",
-        message: "unauthorized acces to reset Password",
+        message: "unauthorized access to reset Password",
       });
     }
 
@@ -275,16 +273,19 @@ const resetPasswordHandler = async (req, res) => {
     // update the password and confirm password
     user.password = resetDetails.password;
     user.confirmPassword = resetDetails.confirmPassword;
+
     // remove the otp from the user
     user.otp = undefined;
     user.otpExpiry = undefined;
 
     // save the user to the database
     await user.save();
+    
     res.status(200).json({
       status: "success",
       message: "password reset successfully",
     });
+    
   } catch (err) {
     return res.status(500).json({
       message: err.message,

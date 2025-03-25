@@ -14,8 +14,8 @@ const {
 AuthRouter.post("/login", loginHandler)
   .post("/signup", signupHandler)
   .get("/profile", protectRouteMiddleware, getProfileHandler)
-  .get("/logout", logoutHandler)
+  .get("/logout", protectRouteMiddleware, logoutHandler)
   .patch("/forgetPassword", forgetPasswordHandler)
-  .patch("/resetPassword/:userId", resetPasswordHandler);
+  .patch("/resetPassword", resetPasswordHandler);
 
 module.exports = AuthRouter;

@@ -17,6 +17,7 @@ import { LucideLoader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import UserSlice from "@/components/Redux/Slice/UserSlice";
+import { toast } from "sonner";
 const actions = UserSlice.actions;
 
 function Signup() {
@@ -39,11 +40,11 @@ function Signup() {
     const onSubmit = async () => {
       try {
           if (!name || !email || !password || !confirmPassword) {
-            alert("Please fill the fields");
+            toast("Please fill the fields");
             return;
           }
           if (password !== confirmPassword) {
-             alert("Password & Confirm Password are not same");
+             toast("Password & Confirm Password are not same");
              return;
            }
           
@@ -59,12 +60,10 @@ function Signup() {
             // do whatever you want
             dispatch(actions.userLoggedInDetails(res.data.user));
             router.push("/");
-            alert("login successfull");
+            toast("login successfull");
           }
         } catch (err) {
-          console.log("err: ", err);
-          // alert("Invalid creds");
-
+          toast(err?.response?.data?.message);
         } finally {
             setLoading(false);
         }
