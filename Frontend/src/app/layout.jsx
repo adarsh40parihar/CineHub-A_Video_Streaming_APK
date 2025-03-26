@@ -5,7 +5,8 @@ import Footer from "@/components/Section/Footer";
 import { Inter } from "next/font/google";
 import StoreProvider from "@/components/Provider/StoreProvider";
 import AuthProvider from "@/components/Provider/AuthProvider";
-import { Toaster } from "@/components/ui/sonner";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -37,7 +38,25 @@ export default function RootLayout({ children }) {
             <Header />
             <main className="mt-[72px]">{children}</main>
             <Footer />
-            <Toaster />
+            <ToastContainer
+              position="top-right"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
+              containerId="notification-toast"
+              style={{ width: "300px" }} // Decreased width from default
+              toastStyle={{
+                fontSize: "14px", // Smaller font size
+                padding: "8px 12px", // Smaller padding
+                minHeight: "60px", // Smaller height
+              }}
+            />
           </AuthProvider>
         </StoreProvider>
       </body>

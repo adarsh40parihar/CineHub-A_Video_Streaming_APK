@@ -13,11 +13,12 @@ import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { api, ENDPOINT } from "@/lib/api_endpoints";
-import { Loader2} from "lucide-react";
+import { Loader2, LucideLoader2} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import UserSlice from "@/components/Redux/Slice/UserSlice";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import ShowToast from "@/components/atoms/ShowToast";
+import { ToastStatus } from "@/components/atoms/ShowToast";
 
 const actions = UserSlice.actions;
 
@@ -46,11 +47,11 @@ function ResetPassword() {
       setLoading(true);
       const res = await api.patch(ENDPOINT.forgetpassword, { email: email });
       if (res.data.status === "success") {
-        toast(res.data.message);
+        ShowToast(ToastStatus.Success, res.data.message);
         setShowDialog(true);
       }
     } catch (err) {
-      toast(err?.response?.data?.message);
+      ShowToast(ToastStatus.Failure, err?.response?.data?.message);
     } finally {
       setLoading(false);
     }
@@ -63,12 +64,15 @@ function ResetPassword() {
       confirmNewPassword.length === 0 ||
       otp.length == 0
     ) {
-      toast("Please fill all fields");
+      ShowToast(ToastStatus.Warning, "Please fill all fields");
       setLoading(false);
       return;
     }
     if (newPassword !== confirmNewPassword) {
-      toast("New password and Confirm password do not match");
+      ShowToast(
+        ToastStatus.Warning,
+        "New password and Confirm password do not match"
+      );
       setLoading(false);
       return;
     }
@@ -82,22 +86,22 @@ function ResetPassword() {
       });
 
       if (res.data.status === "success") {
-        toast("Password reset successfully!");
+        ShowToast(ToastStatus.Success, "Password reset successfully!");
         setShowDialog(false);
         try {
           setLoading2(true);
           await api.get(ENDPOINT.logout);
           dispatch(actions.userLoggedOutDetails());
           setLoading2(false);
-        } catch (error) {
-          console.error("Error logging out:", error);
+        } catch (err) {
+          ShowToast(ToastStatus.Failure, err?.response?.data?.message);
         }
         router.push("/login");
       } else {
-        toast("Failed to reset password. Try Again");
+        ShowToast(ToastStatus.Failure, "Failed to reset password. Try Again");
       }
     } catch (err) {
-      toast(err?.response?.data?.message);
+      ShowToast(ToastStatus.Failure, err?.response?.data?.message);
     } finally {
       setLoading(false);
     }

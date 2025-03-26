@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 
 import {
   Card,
@@ -21,6 +20,8 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import UserSlice from "@/components/Redux/Slice/UserSlice";
 const actions = UserSlice.actions;
+import ShowToast from "@/components/atoms/ShowToast";
+import { ToastStatus } from "@/components/atoms/ShowToast";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -40,7 +41,7 @@ export default function LoginPage() {
   const onSubmit = async () => {
     try {
       if (!email || !password) {
-        toast("Please fill the fields");
+        ShowToast(ToastStatus.Warning, "Please fill the fields");
         return;
       }
 
@@ -55,10 +56,10 @@ export default function LoginPage() {
         // i am logged in
         dispatch(actions.userLoggedInDetails(res.data.user));
         router.push("/");
-        toast("login successfull");
+        ShowToast(ToastStatus.Success, "login successfull");
       }
     } catch (err) {
-      toast(err?.response?.data?.message);
+      ShowToast(ToastStatus.Failure, err?.response?.data?.message);
     } finally {
       setLoading(false);
     }

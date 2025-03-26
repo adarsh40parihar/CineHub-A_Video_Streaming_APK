@@ -17,9 +17,10 @@ import { useDispatch, useSelector } from "react-redux";
 import UserSlice from "@/components/Redux/Slice/UserSlice";
 import { useRouter } from "next/navigation";
 import { api, ENDPOINT } from "@/lib/api_endpoints";
+import ShowToast from "@/components/atoms/ShowToast";
+import { ToastStatus } from "@/components/atoms/ShowToast";
+
 const actions = UserSlice.actions;
-
-
 
 
 function SheetSide() {
@@ -34,8 +35,9 @@ function SheetSide() {
       dispatch(actions.userLoggedOutDetails());
       setOpen(false);
       router.push("/");
+      ShowToast(ToastStatus.Success, "SignOut successfull");
     } catch (error) {
-      console.error("Error logging out:", error);
+       ShowToast(ToastStatus.Failure, err?.response?.data?.message);
     }
   }
   return (
