@@ -5,7 +5,7 @@ import { getWatchURL, PosterFetcher } from '@/lib/api_endpoints';
 import { InboxIcon } from 'lucide-react';
 import Link from 'next/link';
 
-async function CategoriesSection(props) {
+const CategoriesSection = async (props) => {
     const { title, id } = props;
   return (
       <div className="pt-8 px-6">
@@ -19,8 +19,8 @@ async function CategoriesSection(props) {
   );
 }
 
-async function CategoriesSectionContent(props) {
-  const { fetcher, title } = props;
+const CategoriesSectionContent = async (props) => {
+  const { fetcher } = props;
   const data = await fetcher();
     if (!data || data.length === 0) {
       return (
@@ -46,7 +46,7 @@ async function CategoriesSectionContent(props) {
             width={200}
             height={300}
             alt=""
-            className="min-w-[100px] sm:min-w-[150px] md:min-w-[200px] h-[150px] sm:h-[200px] md:h-[300px] rounded-lg bg-slate-600"
+            className="min-w-[100px] sm:min-w-[150px] md:min-w-[200px] h-[150px] sm:h-[200px] md:h-[300px]  rounded-lg bg-slate-600 hover:scale-105 transition-transform duration-200 ease-in-out"
           ></Image>
         </Link>
       ))}
@@ -54,7 +54,7 @@ async function CategoriesSectionContent(props) {
   );
 }
 
-function CategoriesSectionFallback() {
+const CategoriesSectionFallback = () => {
 
   return (
       <ul className="flex gap-4 w-full overflow-scroll scrollbar-hide ">

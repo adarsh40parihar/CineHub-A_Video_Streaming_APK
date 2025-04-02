@@ -51,8 +51,8 @@ const connectWithUsLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#17181a] text-gray-300">
-      <div className="md:mx-auto">
+    <footer className="pt-10 ">
+      <div className="md:mx-auto bg-[#17181a] text-gray-300 border-t-2 border-x-gray-100">
         <div className="flex flex-col md:flex-row md:justify-between md:items-start px-8 py-4">
           <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-16 mt-8">
             {headings.map((heading, index) => (
@@ -68,7 +68,7 @@ export default function Footer() {
               </div>
             ))}
           </div>
-          
+
           <div className="flex flex-col gap-4 md:gap-8 mt-8">
             <h3 className="text-lg font-bold uppercase">Connect With Us</h3>
             <div className="flex gap-4">
@@ -96,7 +96,11 @@ export default function Footer() {
             </h3>
             <div className="flex gap-4">
               {downloadAppLinks.map((link, linkIndex) => (
-                <Link key={linkIndex} href={link.href} className="flex items-center">
+                <Link
+                  key={linkIndex}
+                  href={link.href}
+                  className="flex items-center"
+                >
                   <Image
                     src={link.icon}
                     width={96}
