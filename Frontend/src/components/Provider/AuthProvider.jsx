@@ -21,7 +21,7 @@ function AuthProvider({ children }) {
           dispatch(actions.userLoggedInDetails(res.data.user));
         }
       } catch (err) {
-        console.log("User needs to Login", err);
+        console.log("User needs to Login");
       } finally {
         setLoading(false);
       }

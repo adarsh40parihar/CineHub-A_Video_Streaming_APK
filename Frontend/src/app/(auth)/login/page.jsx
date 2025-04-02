@@ -38,7 +38,8 @@ export default function LoginPage() {
     }
   }, [isLoggedIn, router]);
 
-  const onSubmit = async () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     try {
       if (!email || !password) {
         ShowToast(ToastStatus.Warning, "Please fill the fields");
@@ -74,35 +75,37 @@ export default function LoginPage() {
             Enter your email below to login to your account.
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button onClick={onSubmit} className="w-full">
-            Sign in
-            {loading && <LucideLoader2 className="animate-spin w-4 h-4" />}
-          </Button>
-        </CardFooter>
+        <form onSubmit={onSubmit}>
+          <CardContent className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button type="submit" className="w-full">
+              Sign in
+              {loading && <LucideLoader2 className="animate-spin w-4 h-4" />}
+            </Button>
+          </CardFooter>
+        </form>
         <div className="mt-4 text-center text-sm pb-6 flex justify-between px-6">
           <Link href="/resetPassword" className="hover:text-[#E11D48]">
             Forgot Password?

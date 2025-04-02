@@ -39,7 +39,8 @@ function Signup() {
       }
     }, [isLoggedIn, router]);
 
-    const onSubmit = async () => {
+  const onSubmit = async (e) => {
+      e.preventDefault();
       try {
           if (!name || !email || !password || !confirmPassword) {
             ShowToast(ToastStatus.Warning, "Please fill the fields");
@@ -83,61 +84,61 @@ function Signup() {
             Enter your information to create an account
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="name">Full Name</Label>
-              <Input
-                id="name"
-                placeholder="Your Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
+        <form onSubmit={onSubmit}>
+          <CardContent>
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input
+                  id="name"
+                  placeholder="Your Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="confirm-password">Confirm Password</Label>
+                <Input
+                  id="confirm-password"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+              <Button type="submit" className="w-full">
+                Create an account
+                {loading && <LucideLoader2 className="animate-spin w-4 h-4" />}
+              </Button>
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+            <div className="mt-4 text-center text-sm">
+              Already have an account?{" "}
+              <Link href="/login" className="underline hover:text-[#E11D48]">
+                Sign in
+              </Link>
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="confirm-password">Confirm Password</Label>
-              <Input
-                id="confirm-password"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
-            <Button onClick={onSubmit} className="w-full">
-              Create an account
-              {loading && (
-                <LucideLoader2 className="animate-spin w-4 h-4" />
-              )}
-            </Button>
-          </div>
-          <div className="mt-4 text-center text-sm">
-            Already have an account?{" "}
-            <Link href="/login" className="underline hover:text-[#E11D48]">
-              Sign in
-            </Link>
-          </div>
-        </CardContent>
+          </CardContent>
+        </form>
       </Card>
     </div>
   );

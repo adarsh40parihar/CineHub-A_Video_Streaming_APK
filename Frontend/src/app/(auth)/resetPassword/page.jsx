@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogOverlay } from "@/components/ui/dialog";
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,7 @@ import UserSlice from "@/components/Redux/Slice/UserSlice";
 import { useRouter } from "next/navigation";
 import ShowToast from "@/components/atoms/ShowToast";
 import { ToastStatus } from "@/components/atoms/ShowToast";
+import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 
 const actions = UserSlice.actions;
 
@@ -151,7 +152,17 @@ function ResetPassword() {
               {" "}
               {/*using Overlay for dark background */}
               <DialogContent className="p-4 bg-black rounded-lg shadow-lg">
-                <h2 className="text-2xl font-bold mb-4">Reset Password</h2>
+                <DialogHeader>
+                  <DialogTitle>
+                    <h2 className="text-2xl font-bold">Reset Password</h2>
+                  </DialogTitle>
+                  <DialogDescription>
+                    <p className="mb-2 text-sm text-gray-400 -pt-2">
+                      OTP is sent to {email}
+                    </p>
+                  </DialogDescription>
+                </DialogHeader>
+
                 <div className="grid gap-4">
                   <Label htmlFor="otp">Enter OTP</Label>
                   <Input
