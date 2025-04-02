@@ -108,13 +108,14 @@ const addToWishList = async (req, res) => {
       id: id,
       media_type: media_type,
     };
-    await UserModel.findByIdAndUpdate(
+    const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
       { $push: { wishlist: wishlistItem } },
       { new: true, upsert: true } // options to return the updated document and create if it doesn't exist
     );
     // Send response
     res.status(200).json({
+      user: updatedUser,
       status: "success",
       message: "Item added to wishlist successfully",
     });
@@ -147,7 +148,7 @@ const deleteFromWishlist = async (req, res) => {
     }
 
     // Remove the item from wishlist using $pull operator
-    await UserModel.findByIdAndUpdate(
+    const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
       { $pull: { wishlist: { id: id } } },
       { new: true }
@@ -155,6 +156,7 @@ const deleteFromWishlist = async (req, res) => {
 
     // Send success response
     res.status(200).json({
+      user: updatedUser,
       status: "success",
       message: "Item removed from wishlist successfully",
     });

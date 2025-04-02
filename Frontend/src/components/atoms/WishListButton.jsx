@@ -2,17 +2,19 @@
 
 import { api, ENDPOINT } from '@/lib/api_endpoints';
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Button } from '../ui/button';
 import { Check, Loader, PlusIcon } from 'lucide-react';
 import ShowToast from "@/components/atoms/ShowToast";
 import { ToastStatus } from "@/components/atoms/ShowToast";
+import UserSlice from '../Redux/Slice/UserSlice';
+const actions = UserSlice.actions;
 
 function WishListButton({wishlist}) {
   const [loading, setLoading] = useState(false);
   const { user, isLoggedIn } = useSelector((state) => state.user);
   const [tick, setTick] = useState(false);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (user && user.wishlist) {
       let found = false;
@@ -37,6 +39,7 @@ function WishListButton({wishlist}) {
         setLoading(true);
         const res = await api.post(ENDPOINT.addToWishlist,wishlist);
         if (res.data.status == "success") {
+          dispatch(actions.userLoggedInDetails(res.data.user));
           ShowToast(ToastStatus.Success, "Added to Wishlist");
           setTick(true);
         }
@@ -53,6 +56,7 @@ function WishListButton({wishlist}) {
           setLoading(true);
           const res = await api.delete(ENDPOINT.deleteFromWishlist, { data: { id: wishlist.id } });
           if (res.data.status == "success") {
+            dispatch(actions.userLoggedInDetails(res.data.user));
             ShowToast(ToastStatus.Success, "Removed from Wishlist");
             setTick(false);
           }

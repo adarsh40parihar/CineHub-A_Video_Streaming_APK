@@ -5,6 +5,7 @@ const wishlistItemSchema = new mongoose.Schema({
   poster_path: { type: String, required: true },
   name: { type: String, required: true },
   id: { type: String, required: true },
+  media_type: { type: String, required: true },
 });
 
 const schemaRules = {
