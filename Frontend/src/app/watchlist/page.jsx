@@ -1,38 +1,45 @@
 "use client";
-import CategoriesSectionForWishlist from "@/components/Section/CategoriesSectionForWishlist";
+import CategoriesSection from "@/components/Section/CategoriesSection";
 import { Button } from "@/components/ui/button";
 import { api, ENDPOINT } from "@/lib/api_endpoints";
 import { FolderLockIcon } from "lucide-react";
 import Link from "next/link";
-import React, { Suspense, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 function WatchList() {
   const { isLoggedIn } = useSelector((state) => state.user);
   const title = "Watchlist";
-  const [data, setData] = useState([]);
-   const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await api.get(ENDPOINT.getWishlist);
-        setData(res.data.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (isLoggedIn) {
+  const [watchlistData, setWatchlistData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  // Use useEffect to fetch data only once when component mounts
+    useEffect(() => {
+      const fetchData = async () => {
+        if (isLoggedIn) {
+          try {
+            const res = await api.get(ENDPOINT.getWishlist);
+            setWatchlistData(res.data.data);
+          } catch (error) {
+            console.error("Error fetching watchlist:", error);
+          }
+        }
+      };
       fetchData();
-    }
-  }, [isLoggedIn]);
-  
+    }, [isLoggedIn]);
+
+  // Create memoized fetcher function that returns cached data
+  const fetcher = useCallback(async () => {
+    return watchlistData || [];
+  }, [watchlistData]);
+
   return (
     <div>
       {isLoggedIn ? (
-        <CategoriesSectionForWishlist id="wishlist" title={title} data={data} loading={loading} />
+        <CategoriesSection
+          id="wishlist"
+          title={title}
+          fetcher={fetcher}
+        />
       ) : (
         <div>
           <div className="px-6 pt-7 text-2xl">Wishlist</div>

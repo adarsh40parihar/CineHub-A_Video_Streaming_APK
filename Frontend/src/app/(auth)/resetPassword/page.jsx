@@ -153,13 +153,11 @@ function ResetPassword() {
               {/*using Overlay for dark background */}
               <DialogContent className="p-4 bg-black rounded-lg shadow-lg">
                 <DialogHeader>
-                  <DialogTitle>
-                    <h2 className="text-2xl font-bold">Reset Password</h2>
+                  <DialogTitle className="text-2xl font-bold">
+                    Reset Password
                   </DialogTitle>
-                  <DialogDescription>
-                    <p className="mb-2 text-sm text-gray-400 -pt-2">
-                      OTP is sent to {email}
-                    </p>
+                  <DialogDescription className="mb-2 text-sm text-gray-400 -pt-2">
+                    OTP is sent to {email}
                   </DialogDescription>
                 </DialogHeader>
 

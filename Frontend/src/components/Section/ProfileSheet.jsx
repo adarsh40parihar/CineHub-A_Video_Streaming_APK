@@ -31,11 +31,13 @@ function SheetSide() {
   const router = useRouter();
   const signOut = async () => {
     try {
-      await api.get(ENDPOINT.logout);
-      dispatch(actions.userLoggedOutDetails());
-      setOpen(false);
-      router.push("/");
-      ShowToast(ToastStatus.Success, "SignOut successfull");
+      const res = await api.get(ENDPOINT.logout);
+      if (res.data.status == "success") { 
+        dispatch(actions.userLoggedOutDetails());
+        setOpen(false);
+        router.push("/");
+        ShowToast(ToastStatus.Success, "SignOut successfull");
+      }
     } catch (error) {
        ShowToast(ToastStatus.Failure, err?.response?.data?.message);
     }

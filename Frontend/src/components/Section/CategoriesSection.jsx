@@ -5,34 +5,33 @@ import { getWatchURL, PosterFetcher } from '@/lib/api_endpoints';
 import { InboxIcon } from 'lucide-react';
 import Link from 'next/link';
 
-const CategoriesSection = async (props) => {
-    const { title, id } = props;
+const CategoriesSection =  (props) => {
+    const { title, id, fetcher} = props;
   return (
       <div className="pt-8 px-6">
         <h2 id={id} className="text-2xl font-medium mb-6 scroll-m-[100px]">
           {title}
         </h2>
         <Suspense fallback={<CategoriesSectionFallback />}>
-          <CategoriesSectionContent {...props} />
+          <CategoriesSectionContent fetcher={fetcher} />
         </Suspense>
       </div>
   );
 }
 
-const CategoriesSectionContent = async (props) => {
-  const { fetcher } = props;
+const CategoriesSectionContent = async ({ fetcher }) => {
   const data = await fetcher();
-    if (!data || data.length === 0) {
-      return (
-        <div className="flex flex-col items-center justify-center w-full h-[150px] sm:h-[200px] md:h-[300px] py-12">
-          <InboxIcon
-            className="w-32 h-32 text-slate-400 mb-10"
-            strokeWidth={1.2}
-          />
-          <p className="text-lg text-gray-500">No items found.</p>
-        </div>
-      );
-    }
+  if (!data || data.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center w-full h-[150px] sm:h-[200px] md:h-[300px] py-12">
+        <InboxIcon
+          className="w-32 h-32 text-slate-400 mb-10"
+          strokeWidth={1.2}
+        />
+        <p className="text-lg text-gray-500">No items found.</p>
+      </div>
+    );
+  }
   return (
     <ul className="flex gap-4 w-full overflow-scroll scrollbar-hide ">
       {data.map((vid) => (
@@ -52,7 +51,7 @@ const CategoriesSectionContent = async (props) => {
       ))}
     </ul>
   );
-}
+};
 
 const CategoriesSectionFallback = () => {
 

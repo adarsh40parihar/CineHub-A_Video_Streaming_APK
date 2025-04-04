@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
             <ToastContainer
               position="top-right"
               autoClose={2000}
-              hideProgressBar={false}
+              hideProgressBar={true}
               newestOnTop={false}
               closeOnClick
               rtl={false}
