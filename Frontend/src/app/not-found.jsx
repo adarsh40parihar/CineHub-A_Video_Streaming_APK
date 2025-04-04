@@ -4,7 +4,7 @@ import { AlertCircle, ArrowLeftToLine } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="flex pt-10 pb-[10rem]  flex-col items-center justify-center bg-background px-4 text-center">
+    <div className="flex pt-10 pb-[10rem]  flex-col items-center justify-center gap-4 bg-background px-4 text-center">
       <div className="mx-auto max-w-md space-y-6">
         <div className="flex justify-center">
           <AlertCircle className="h-24 w-24 text-destructive" />
@@ -16,20 +16,18 @@ export default function NotFound() {
           Page Not Found
         </h2>
 
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground pb-4">
           Sorry, we couldn't find the page you're looking for. The page might
           have been removed, had its name changed, or is temporarily
           unavailable.
         </p>
 
-        <div className="flex justify-center pt-4">
-          <Button asChild size="lg">
-            <div>
-              <ArrowLeftToLine/>
-              <Link href="/">Return to Home</Link>
-            </div>
+        <Link href="/" className="mt-10">
+          <Button size="lg">
+            <ArrowLeftToLine size={20} />
+            Return to Home
           </Button>
-        </div>
+        </Link>
       </div>
     </div>
   );

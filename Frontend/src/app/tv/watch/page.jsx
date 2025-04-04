@@ -6,7 +6,8 @@ import { FileVideo } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
 
-const TvWatch = async ({ searchParams: { id, poster_path } }) => {
+const TvWatch = async ({ searchParams }) => {
+  const { id, poster_path } = await searchParams;
   const details = (await api.get(ENDPOINT.getTvShowsDetails(id))).data.data
     .results?.[0];
   return (

@@ -33,13 +33,13 @@ export default function Header() {
               alt="JioCinema Logo"
               width={136}
               height={36}
-              className="md:h-9 md:max-w-[136px] max-w-24"
+              className="md:h-9 md:max-w-[136px] max-w-24 mr-4"
             />
           </Link>
 
           <Link
             href="/subscription"
-            className="ml-4 mr-4 md:px-4 px-4 py-1 font-medium rounded-3xl hidden sm:flex items-center gap-2 text-[#c1a362] border-[#c1a362] border text-sm md:text-base"
+            className="mr-4 md:px-4 px-4 py-1 font-medium rounded-3xl hidden sm:flex items-center gap-2 text-[#c1a362] border-[#c1a362] border text-sm md:text-base"
           >
             <Image src="/crown.svg" height={16} width={16} alt="crown" />
             <span className="pr-4">Go Premium</span>
