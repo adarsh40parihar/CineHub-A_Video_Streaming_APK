@@ -17,14 +17,15 @@ const ShareButton = () => {
                 ShowToast(ToastStatus.Success, "URL copied to the clipboard");
             })
             .catch((err) => {
-                ShowToast(ToastStatus.Failure, err?.response?.data?.message);
+                ShowToast(ToastStatus.Failure, err.message || "Failed to copy URL");
             });
     };
     return (
-        <Button onClick={handleShare} >
-            <Share2Icon className="w-4 h-4 mr-2" />
-            Share
-        </Button>
+      <Button data-testid="shareButton" onClick={handleShare}>
+        <Share2Icon className="w-4 h-4 mr-2" />
+        Share
+      </Button>
+      
     );
 };
 

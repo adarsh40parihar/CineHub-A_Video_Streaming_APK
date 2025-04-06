@@ -10,6 +10,6 @@ module.exports = {
       { configFile: "./babel.config.test.js" },
     ],
   },
-  testMatch: ["**/*.test.js", "**/*.test.jsx"],
+  testMatch: ["**/src/**/*.test.js", "**/src/**/*.test.jsx"],
   moduleDirectories: ["node_modules", "<rootDir>"],
 };
