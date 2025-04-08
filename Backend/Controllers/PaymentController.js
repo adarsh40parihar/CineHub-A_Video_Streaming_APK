@@ -39,8 +39,8 @@ const getPaymentController = async (req, res) => {
         });
     } catch (err) {
         res.status(500).json({
-        message: "failure",
-        error: err,
+          message: err.message,
+          status: "failure",
         });
     }
 };
@@ -68,8 +68,7 @@ const updatePremiumAccessController = async (req, res) => {
         res.json({ message: { isPremium: true } });
         
     } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ message: err.message, status: "failure" });
     }
 };
 

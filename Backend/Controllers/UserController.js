@@ -50,7 +50,8 @@ const getAllUser = async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({
-      message: "failure",
+      message: err.message,
+      status: "failure",
     });
   }
 };
@@ -70,7 +71,8 @@ const deleteUser = async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({
-      message: "something went wrong on our end",
+      message: err.message,
+      status: "failure",
     });
   }
 };
@@ -121,7 +123,8 @@ const addToWishList = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
-      message: "something went wrong on our end",
+      message: err.message,
+      status: "failure",
     });
   }
 };
@@ -161,10 +164,9 @@ const deleteFromWishlist = async (req, res) => {
       message: "Item removed from wishlist successfully",
     });
   } catch (err) {
-    console.error("Error removing from wishlist:", err);
     res.status(500).json({
+      message: err.message,
       status: "failure",
-      message: "Something went wrong on our end",
     });
   }
 };
@@ -179,7 +181,8 @@ const getUserWishList = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
-      message: "something went wrong on our end",
+      message: err.message,
+      status: "failure",
     });
   }
 };

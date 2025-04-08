@@ -100,7 +100,6 @@ const getTvShowDetails = async (req, res) => {
       data: details,
     });
   } catch (err) {
-    console.log("err: ", err);
     res.status(500).json({
       message: err.message,
       status: "failure",
