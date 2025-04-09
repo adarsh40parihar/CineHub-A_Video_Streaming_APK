@@ -31,7 +31,7 @@ const schemaRules = {
     // custom validation
     validate: [
       function () {
-        return this.password == this.confirmPassword;
+        return this.password === this.confirmPassword;
       },
       "password should be equal to confirm password",
     ],
@@ -51,8 +51,6 @@ const schemaRules = {
   },
   role: {
     type: String,
-    // these are the only possible values for the role
-    enum: ["user", "admin", "feed curator", "moderator"],
     default: "user",
   },
   otp: {
@@ -72,11 +70,19 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
 };
 
 /*****************hooks in mongodb************/
+// these are the only possible values for the role
+const validRoles =  ["user", "admin", "feed curator", "moderator"] 
 // pre save hook
-userSchema.pre("save",async function (next) {
+userSchema.pre("save", async function (next) {
+  // Check if the role is valid
+  const isValid = validRoles.find((role)=> this.role==role);
+  if (!isValid) {
+    next(new Error("Role is not allowed"));
+  }
+  
   // Only run this function if password was modified
   if (!this.isModified('password')) return next();
-  
+
   try {
     // Generate a salt
     const salt = await bcrypt.genSalt(10);
@@ -91,6 +97,7 @@ userSchema.pre("save",async function (next) {
     next(error);
   }
 })
+
 // post save hook
 userSchema.post("save", function() {
     // console.log("Post save was called");

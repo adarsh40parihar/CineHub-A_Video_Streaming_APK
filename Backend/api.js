@@ -4,10 +4,27 @@ const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const rateLimiter = require("express-rate-limit");
 
 dotenv.config(); 
 
+const limiter = rateLimiter({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 1000, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+  standardHeaders: "draft-8", // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+  // store: ... , // Redis, Memcached, etc. See below.
+});
+
+// Middleware setup
+app.use(limiter);
+app.use(helmet());
 app.use(express.json());
+app.use(mongoSanitize());
+app.use(xss());
 app.use(cookieParser());
 
 if (process.env.NODE_ENV !== "test") {
@@ -23,6 +40,7 @@ const corsConfig = {
 app.use(cors(corsConfig));
 app.options("*", cors(corsConfig));
 
+// Router imports
 const AuthRouter = require("./Router/AuthRouter");  
 const UserRouter = require("./Router/UserRouter");
 const MoviesRouter = require("./Router/MoviesRouter");
@@ -31,6 +49,7 @@ const TvShowsRouter = require("./Router/TvRouter");
 const PaymentRouter = require("./Router/PaymentRouter");
 const VideoRouter = require("./Router/VideoRouter");
 
+// Router middleware
 app.use("/api/auth/", AuthRouter); //✅
 app.use("/api/user", UserRouter);  //✅
 app.use("/api/movies", MoviesRouter); //✅
