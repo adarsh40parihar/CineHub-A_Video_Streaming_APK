@@ -15,14 +15,14 @@ const getPaymentController = async (req, res) => {
         const userId = req.userId;
         const user = await UserModel.findById(userId);
         if (!user) {
-          return res.status(404).json({ error: "User not found." });
+          return res.status(404).json({ message: "User not found." });
         }
-        if (user.premiumAccess) {
-          return res.status(400).json({ error: "You have alreay a existing plan" });
+        if (user.isPremium) {
+          return res.status(400).json({ message: "You have alreay a existing plan" });
         }
 
         // if no existing plan then create a new one
-        const amount = req.params.order === "family" ? 89 : 29;
+        const amount = req.query.plan_type == "family" ? 89 : 29;
         const currency = "INR";
         const receipt = `rp_${uid.rnd()}_${Date.now()}`;//generates a random & unique ID for receipt.
 
@@ -51,21 +51,21 @@ const updatePremiumAccessController = async (req, res) => {
       const { email, premiumType } = req.body;
       const user = await UserModel.findOne({ email: email });
       if (!user) {
-        return res.status(404).json({ error: "User not found" });
+        return res.status(404).json({ message: "User not found" });
       }
       // Find and update user
       const updatedUser = await UserModel.findOneAndUpdate(
         { email },
         {
           $set: {
-            premiumAccess: true,
+            isPremium: true,
             premiumType: premiumType,
           },
         },
         { new: true, runValidators: true }
       );
         
-        res.json({ message: { isPremium: true } });
+        res.status(200).json({ message: "Payment successful! Premium access activated"});
         
     } catch (err) {
         res.status(500).json({ message: err.message, status: "failure" });

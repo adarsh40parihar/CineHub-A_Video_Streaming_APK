@@ -39,8 +39,8 @@ export const ENDPOINT = {
   deleteFromWishlist: "/user/wishlist",
 
   //payment
-  payment: "/payment/",
-  updatePremium: "/payment/update-premium-access",
+  payment: (planType) => `/payment/order?plan_type=${planType}`,
+  updatePremium: "/payment/updatepremium",
 
   // streaming urls
   fetchAllStreamingVideos: `/video`,

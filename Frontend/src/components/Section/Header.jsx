@@ -8,6 +8,7 @@ import { Search, ChevronDown, Mic, User } from "lucide-react";
 // Remove the inappropriate import
 // import { href, NavLink } from "react-router-dom";
 import ProfileSheet from "@/components/Section/ProfileSheet";
+import { useSelector } from "react-redux";
 
 export const navLinks = [
   { name: "Home", key: "", href: "/" },
@@ -20,6 +21,7 @@ export const navLinks = [
 export default function Header() {
   //  anything that start with use are hooks
   const path = usePathname();
+  const { user, isLoggedIn } = useSelector((state) => state.user);
   const activeTabKey = path.split("/")[1];
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
@@ -42,7 +44,16 @@ export default function Header() {
             className="mr-4 md:px-4 px-4 py-1 font-medium rounded-3xl hidden sm:flex items-center gap-2 text-[#c1a362] border-[#c1a362] border text-sm md:text-base"
           >
             <Image src="/crown.svg" height={16} width={16} alt="crown" />
-            <span className="pr-4">Go Premium</span>
+            <span className="pr-4">
+              {isLoggedIn
+                ? user.isPremium
+                  ? `Premium: ${
+                      user.premiumType.charAt(0).toUpperCase() +
+                      user.premiumType.slice(1)
+                    }`
+                  : "Go Premium"
+                : "Go Premium"}
+            </span>
           </Link>
         </div>
         <nav className="lg:flex lg:space-x-4 space-x-0 hidden">

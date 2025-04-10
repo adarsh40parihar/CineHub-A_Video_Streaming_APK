@@ -15,6 +15,12 @@ const UserSlice = createSlice({
       state.isLoggedIn = false;
       state.user = null;
     },
+    updateUserPremium: (state, action) => {
+      if (state.user) {
+        state.user.isPremium = action.payload.isPremium;
+        state.user.premiumType = action.payload.premiumType;
+      }
+    },
   },
 });
 

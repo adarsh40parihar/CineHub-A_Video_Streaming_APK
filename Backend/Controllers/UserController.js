@@ -8,7 +8,7 @@ const {
 const getCurrentUser = async (req, res) => {
   try {
     const userId = req.userId;
-    const { _id, name, email, createdAt, wishlist, isPremium } =
+    const { _id, name, email, createdAt, wishlist, isPremium, premiumType } =
       await UserModel.findById(userId);
     if (_id) {
       res.status(200).json({
@@ -19,6 +19,7 @@ const getCurrentUser = async (req, res) => {
           createdAt: createdAt,
           wishlist: wishlist,
           isPremium: isPremium,
+          premiumType: premiumType,
         },
         status: "success",
       });

@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { api, ENDPOINT } from "@/lib/api_endpoints";
 import ShowToast from "@/components/atoms/ShowToast";
 import { ToastStatus } from "@/components/atoms/ShowToast";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const actions = UserSlice.actions;
 
@@ -38,41 +39,52 @@ function SheetSide() {
         router.push("/");
         ShowToast(ToastStatus.Success, "SignOut successfull");
       }
-    } catch (error) {
+    } catch (err) {
        ShowToast(ToastStatus.Failure, err?.response?.data?.message);
     }
   }
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
-        <Image
-          src="/profile.png"
-          alt="Profile Icon"
-          className="ml-4 h-10 w-10 rounded-full"
-          width={40}
-          height={40}
-        />
+        {!isLoggedIn ? (
+          <Image
+            src="/profile.avif"
+            alt="Profile Icon"
+            className="ml-4 h-10 w-10 rounded-full"
+            width={40}
+            height={40}
+          />
+        ) : (
+          <div className="ml-4 h-10 w-10 rounded-full bg-[#0059A3] text-xl font-semibold flex items-center justify-center">
+            {user ? user.name[0].toUpperCase() : ""}
+          </div>
+        )}
       </SheetTrigger>
       <SheetContent
         side={"right"}
         className="px-6 overflow-auto scrollbar-hide"
       >
-        <SheetTitle className="text-2xl">Profile</SheetTitle>{" "}
-        {/* Added DialogTitle */}
-        <SheetDescription>
-          Manage your profile and settings
-        </SheetDescription>{" "}
-        {/* Added Description */}
-        <div className="bg-slate-700/30 p-6 flex flex-col items-center gap-2 mt-[80px] rounded-lg">
-          <Image
-            src="/profile.png"
-            alt="Profile Icon"
-            className="h-[100px] w-[100px] rounded-full -mt-[60px]"
-            width={40}
-            height={40}
-          />
-          <p className="text-xl font-bold capitalize">
-            {isLoggedIn ? user.name : "Guest"}
+        <VisuallyHidden>
+          <SheetTitle className="text-2xl">Profile</SheetTitle>{" "}
+          <SheetDescription>Manage your profile and settings</SheetDescription>
+        </VisuallyHidden>
+        <div className="bg-slate-700/30 p-6 flex flex-col items-center gap-2 mt-[60px] rounded-lg">
+          {!isLoggedIn ? (
+            <Image
+              src="/profile.avif"
+              alt="Profile Icon"
+              className="h-[100px] w-[100px] rounded-full -mt-[60px]"
+              width={40}
+              height={40}
+            />
+          ) : (
+            <div className="h-[100px] w-[100px] -mt-[70px] rounded-full bg-[#0059A3] text-5xl font-semibold flex items-center justify-center">
+              {user ? user.name[0].toUpperCase() : ""}
+            </div>
+          )}
+
+          <p className="text-xl font-bold capitalize mt-2">
+            {isLoggedIn ? user.name : "GUEST"}
           </p>
           {isLoggedIn ? (
             <Link

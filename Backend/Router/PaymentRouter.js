@@ -8,6 +8,6 @@ const { protectRouteMiddleware } = require("../Controllers/AuthController");
 PaymentRouter
     .use(protectRouteMiddleware)
     .patch("/updatepremium", updatePremiumAccessController)
-    .post("/:order", getPaymentController)
+    .post("/order", getPaymentController)
 
 module.exports = PaymentRouter;

@@ -40,7 +40,7 @@ const schemaRules = {
     type: Date,
     default: Date.now(),
   },
-  premiumAccess: {
+  isPremium: {
     type: Boolean,
     default: false,
   },
