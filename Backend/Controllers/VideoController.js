@@ -76,8 +76,34 @@ const getVideoStream = async (req, res) => {
     }
  
 };
+const getThumbnail = async (req, res) => {
+    try {
+        const videoId = req.query.id;
+        if (!videoId) {
+          return res.status(400).json({ message: "Video ID is required" });
+        }
+        const thumbnailPath = path.join(__dirname, "..", "Thumbnails", `${videoId}.png`);
+
+        if (!fs.existsSync(thumbnailPath)) {
+           return res.status(404).json({
+             message: "Thumbnail does not exist!!",
+             status: "failure",
+           });
+        }
+
+        // Send the thumbnail
+        res.sendFile(thumbnailPath);
+
+    } catch (err) {
+        return res.status(500).json({
+          message: err.message,
+          status: "failure",
+        }); 
+    }
+}
 
 module.exports = {
   getAllVideos,
   getVideoStream,
+  getThumbnail,
 };

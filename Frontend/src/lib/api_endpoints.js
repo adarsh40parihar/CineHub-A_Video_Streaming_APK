@@ -43,8 +43,9 @@ export const ENDPOINT = {
   updatePremium: "/payment/updatepremium",
 
   // streaming urls
-  fetchAllStreamingVideos: `/video`,
-  fetchStreamingVideo: (id) => `/video?id=${id}`,
+  fetchAllStreamingVideos: `/videos`,
+  fetchStreamingVideo: (id) => `/videos/watch?id=${id}`,
+  fetchVideoThumbnail: (id) => `/videos/thumbnail?id=${id}`,
 };
 
 export const PosterFetcher = (path) => {
@@ -60,14 +61,13 @@ export const api = axios.create({
   withCredentials: true,
 });
 
-
-
 //By clicking the banner get the id of that banner.
 export function getWatchURL(vidId, mediaType, poster_path) {
   const prefix = mediaType === "tv" ? "tv" : "movies";
   return `${prefix}/watch?id=${vidId}&poster_path=${poster_path}`;
 }
 
+export const getStreamingVideoThumbanial = (id) => API_BASE_URL + ENDPOINT.fetchVideoThumbnail(id);
 
 
 

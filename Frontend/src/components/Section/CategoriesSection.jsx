@@ -33,11 +33,12 @@ const CategoriesSectionContent = async ({ fetcher }) => {
     );
   }
   return (
-    <ul className="flex gap-4 w-full overflow-scroll scrollbar-hide ">
+    <ul className="flex gap-4 w-full overflow-x-scroll scrollbar-hide py-4">
       {data.map((vid) => (
         <Link
           href={getWatchURL(vid?.id, vid?.media_type, vid?.poster_path)}
           key={vid.id}
+          className="flex-shrink-0 transform-gpu"
         >
           <Image
             key={vid.id}
@@ -45,7 +46,7 @@ const CategoriesSectionContent = async ({ fetcher }) => {
             width={200}
             height={300}
             alt=""
-            className="min-w-[100px] sm:min-w-[150px] md:min-w-[200px] h-[150px] sm:h-[200px] md:h-[300px]  rounded-lg bg-slate-600 hover:scale-105 transition-transform duration-200 ease-in-out"
+            className="min-w-[100px] sm:min-w-[150px] md:min-w-[200px] h-[150px] sm:h-[200px] md:h-[300px] rounded-lg bg-slate-600 hover:scale-105 transition-all duration-300 ease-in-out object-cover"
           ></Image>
         </Link>
       ))}
@@ -56,11 +57,14 @@ const CategoriesSectionContent = async ({ fetcher }) => {
 const CategoriesSectionFallback = () => {
 
   return (
-      <ul className="flex gap-4 w-full overflow-scroll scrollbar-hide ">
-        {new Array(12).fill(0).map((e, idx) => (
-          <Skeleton key={idx} className="min-w-[200px] h-[300px]" />
-        ))}
-      </ul>
+    <ul className="flex gap-4 w-full overflow-scroll scrollbar-hide py-4">
+      {new Array(12).fill(0).map((e, idx) => (
+        <Skeleton
+          key={idx}
+          className="min-w-[200px] h-[300px] flex-shrink-0 rounded-lg"
+        />
+      ))}
+    </ul>
   );
 }
 
