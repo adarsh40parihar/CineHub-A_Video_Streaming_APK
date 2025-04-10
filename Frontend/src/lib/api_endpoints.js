@@ -59,6 +59,10 @@ export const api = axios.create({
   baseURL: API_BASE_URL,
   // credentials
   withCredentials: true,
+  credentials: "include",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 //By clicking the banner get the id of that banner.

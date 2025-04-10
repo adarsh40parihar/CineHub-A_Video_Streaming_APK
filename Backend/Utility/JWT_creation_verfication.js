@@ -12,8 +12,11 @@ const tokenCreation = async (req, res, id) => {
   const authToken = await promisdiedJWTsign({ id:id }, process.env.JWT_SECRET_KEY);
   // token -> cookie
   res.cookie("jwt", authToken, {
-    maxAge: 1000 * 60 * 60 * 24 * 30,  //age => 30 days
+    maxAge: 1000 * 60 * 60 * 24 * 30, //age => 30 days
     httpOnly: true, // it can only be accessed by the server
+    secure: process.env.NODE_ENV === "production", // true in production
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    path: "/",
   });
 };
 

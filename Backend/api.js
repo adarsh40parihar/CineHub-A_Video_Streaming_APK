@@ -33,11 +33,13 @@ if (process.env.NODE_ENV !== "test") {
 
 // allowing frontend to access the api
 const cors = require("cors");
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(",");
+
 const corsConfig = {
-  origin: "*", // Replace with your frontend's origin
+  origin: allowedOrigins, // Use the actual array instead of true
   credentials: true,
-  methods: "GET,POST,PUT,DELETE,OPTIONS",
-  allowedHeaders: "Content-Type,Authorization",
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use(cors(corsConfig));
 app.options("*", cors(corsConfig));

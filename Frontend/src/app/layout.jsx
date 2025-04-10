@@ -39,10 +39,10 @@ export default function RootLayout({ children }) {
             <main className="mt-[72px]">{children}</main>
             <Footer />
             <ToastContainer
-              position="top-right"
-              autoClose={2000}
-              hideProgressBar={true}
-              newestOnTop={false}
+              position="top-center"
+              autoClose={1500}
+              hideProgressBar={false}
+              newestOnTop
               closeOnClick
               rtl={false}
               pauseOnFocusLoss
@@ -50,11 +50,26 @@ export default function RootLayout({ children }) {
               pauseOnHover
               theme="dark"
               containerId="notification-toast"
-              style={{ width: "300px" }} // Decreased width from default
+              style={{
+                width: "400px", // Increased width for better readability
+                marginTop: "10px", // Adjusted to account for your header height
+              }}
               toastStyle={{
-                fontSize: "14px", // Smaller font size
-                padding: "8px 12px", // Smaller padding
-                minHeight: "60px", // Smaller height
+                fontSize: "16px",
+                padding: "15px 18px",
+                minHeight: "65px",
+                backgroundColor: "rgba(17, 17, 17, 0.95)", // Dark theme matching Jio Cinema
+                color: "#ffffff",
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)", // Enhanced shadow
+                border: "1px solid rgba(255, 255, 255, 0.08)", // Subtle border
+                borderRadius: "12px",
+                backdropFilter: "blur(10px)",
+                display: "flex",
+                alignItems: "center",
+                textAlign: "left",
+                lineHeight: "1.5",
+                fontWeight: "400",
+                letterSpacing: "0.3px",
               }}
             />
           </AuthProvider>
