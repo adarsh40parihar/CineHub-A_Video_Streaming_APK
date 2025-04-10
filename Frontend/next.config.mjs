@@ -8,6 +8,9 @@ const nextConfig = {
       {
         hostname: "localhost",
       },
+      {
+        hostname: "project-jio-cinema-backend.onrender.com",
+      },
     ],
   },
 };

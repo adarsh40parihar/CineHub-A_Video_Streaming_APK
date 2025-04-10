@@ -1,4 +1,3 @@
-import CategoriesSection from "@/components/Section/CategoriesSection";
 import { api, ENDPOINT, getStreamingVideoThumbanial } from "@/lib/api_endpoints";
 import { cn } from "@/lib/utils";
 import { PlayCircleIcon } from "lucide-react";

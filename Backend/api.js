@@ -34,8 +34,10 @@ if (process.env.NODE_ENV !== "test") {
 // allowing frontend to access the api
 const cors = require("cors");
 const corsConfig = {
-  origin: "http://localhost:3000",// Replace with your frontend's origin
+  origin: "*", // Replace with your frontend's origin
   credentials: true,
+  methods: "GET,POST,PUT,DELETE,OPTIONS",
+  allowedHeaders: "Content-Type,Authorization",
 };
 app.use(cors(corsConfig));
 app.options("*", cors(corsConfig));
@@ -72,7 +74,7 @@ async function startServer() {
       })
       .catch((err) => console.log("Error connecting to the database:", err));
   }
-  const PORT = process.env.NODE_ENV === 'test' ? 5000 : process.env.PORT;
+  const PORT = process.env.NODE_ENV === 'test' ? 5000 : process.env.PORT || 3400;
   
   app.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);

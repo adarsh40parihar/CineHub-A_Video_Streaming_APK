@@ -2,7 +2,7 @@ const UserModel = require("../Model/UserModel");
 const {
   tmdbApi,
   TMDB_ENDPOINT,
-} = require("../../../../Nodejs/Final_code_Auth&User/Services/TMDB_Services");
+} = require("../Services/TMDB_Services");
 /********************handler function -> users*********************************/
 
 const getCurrentUser = async (req, res) => {
