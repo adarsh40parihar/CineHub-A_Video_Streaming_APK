@@ -1,3 +1,4 @@
+const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
@@ -82,16 +83,19 @@ const getThumbnail = async (req, res) => {
         if (!videoId) {
           return res.status(400).json({ message: "Video ID is required" });
         }
+        const videoPath = path.join(__dirname, "..", "Videos", `${videoId}.mp4`);
+        if (!fs.existsSync(videoPath)) {
+          return res.status(404).json({ message: "Video not found" });
+        }
+
         const thumbnailPath = path.join(__dirname, "..", "Thumbnails", `${videoId}.png`);
 
         if (!fs.existsSync(thumbnailPath)) {
-           return res.status(404).json({
-             message: "Thumbnail does not exist!!",
-             status: "failure",
-           });
+            await generateThumbnailUtil(videoId);
         }
 
         // Send the thumbnail
+        res.setHeader("Content-Type", "image/png");
         res.sendFile(thumbnailPath);
 
     } catch (err) {
@@ -101,7 +105,57 @@ const getThumbnail = async (req, res) => {
         }); 
     }
 }
+const generateThumbnailUtil = async (videoId) => {
+  try {
+    const videoPath = path.join(__dirname, "..", "Videos", `${videoId}.mp4`);
+    const thumbnailPath = path.join(
+      __dirname,
+      "..",
+      "Thumbnails",
+      `${videoId}.png`
+    );
 
+    // Verify video exists
+    if (!fs.existsSync(videoPath)) {
+      throw new Error("Video file not found");
+    }
+
+    // Ensure the thumbnails directory exists
+    const thumbnailDir = path.dirname(thumbnailPath);
+    if (!fs.existsSync(thumbnailDir)) {
+      fs.mkdirSync(thumbnailDir, { recursive: true });
+    }
+
+    return new Promise((resolve, reject) => {
+      const ffmpeg = spawn("ffmpeg", [
+        "-i",
+        videoPath,
+        "-ss",
+        "00:00:01",
+        "-frames:v",
+        "1",
+        "-f",
+        "image2",
+        thumbnailPath,
+      ]);
+
+
+      ffmpeg.on("close", (code) => {
+        if (code === 0) {
+          resolve(thumbnailPath);
+        } else {
+          reject(new Error(`FFmpeg process exited with code ${code}`));
+        }
+      });
+
+      ffmpeg.on("error", (err) => {
+        reject(err);
+      });
+    });
+  } catch (error) {
+    throw error;
+  }
+};
 module.exports = {
   getAllVideos,
   getVideoStream,
