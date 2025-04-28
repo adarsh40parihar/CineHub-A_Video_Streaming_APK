@@ -32,6 +32,7 @@ export const ENDPOINT = {
   //eextra data
   getMovieDetails: (id) => `/movies/details?id=${id}`,
   getTvShowsDetails: (id) => `/tv/details?id=${id}`,
+  searchResult:(query)=>`/discover/explore?search_query=${query}`,
 
   //user
   addToWishlist: "/user/wishlist",

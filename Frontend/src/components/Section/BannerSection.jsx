@@ -62,9 +62,9 @@ async function BannerSectionContent({ fetcher }) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <div className="absolute bottom-2  right-[12%] hidden md:flex">
-          <CarouselPrevious className="h-[45px] w-[45px]" />
-          <CarouselNext className="h-[45px] w-[45px]" />
+        <div className="absolute bottom-4 right-[10%] hidden md:flex gap-4">
+          <CarouselPrevious className="h-[50px] w-[50px] bg-gray-800 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-700 hover:scale-110 transition-all duration-300 ease-in-out" />
+          <CarouselNext className="h-[50px] w-[50px] bg-gray-800 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-700 hover:scale-110 transition-all duration-300 ease-in-out" />
         </div>
       </Carousel>
     </div>

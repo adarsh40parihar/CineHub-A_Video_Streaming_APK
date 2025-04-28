@@ -33,7 +33,7 @@ const CategoriesSectionContent = async ({ fetcher }) => {
     );
   }
   return (
-    <ul className="flex gap-4 w-full overflow-x-scroll scrollbar-hide py-4">
+    <ul className="flex gap-5 w-full overflow-x-scroll scrollbar-hide py-4">
       {data.map((vid) => (
         <Link
           href={getWatchURL(vid?.id, vid?.media_type, vid?.poster_path)}
@@ -46,7 +46,7 @@ const CategoriesSectionContent = async ({ fetcher }) => {
             width={200}
             height={300}
             alt=""
-            className="min-w-[100px] sm:min-w-[150px] md:min-w-[200px] h-[150px] sm:h-[200px] md:h-[300px] rounded-lg bg-slate-600 hover:scale-105 transition-all duration-300 ease-in-out object-cover"
+            className="min-w-[100px] sm:min-w-[150px] md:min-w-[200px] h-[150px] sm:h-[200px] md:h-[300px] rounded-lg bg-slate-600 hover:scale-110 transition-all duration-400 ease-in-out object-cover"
           ></Image>
         </Link>
       ))}

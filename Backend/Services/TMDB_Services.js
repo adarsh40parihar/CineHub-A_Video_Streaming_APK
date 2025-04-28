@@ -14,6 +14,7 @@ const TMDB_ENDPOINT = {
   fetchPopular: `/trending/all/week`,
   fetchUpcoming: `/movie/upcoming?include_video=true`,
   fetchTopRated: `/movie/top_rated?include_video=true`,
+  fetchSearchQuery: (search_input) =>`/search/multi?query=${search_input}&include_adult=false&language=en-US&page=1`,
 
   // Movies
   fetchActionMovies: `/discover/movie?language=en-US&with_genres=28`,

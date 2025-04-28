@@ -45,7 +45,7 @@ app.use(cors(corsConfig));
 app.options("*", cors(corsConfig));
 
 // Router imports
-const AuthRouter = require("./Router/AuthRouter");  
+const AuthRouter = require("./Router/AuthRouter");
 const UserRouter = require("./Router/UserRouter");
 const MoviesRouter = require("./Router/MoviesRouter");
 const DiscoverRouter = require("./Router/DiscoverRouter");
@@ -54,18 +54,18 @@ const PaymentRouter = require("./Router/PaymentRouter");
 const VideoRouter = require("./Router/VideoRouter");
 
 // Router middleware
-app.use("/api/auth/", AuthRouter); //✅
-app.use("/api/user", UserRouter);  //✅
-app.use("/api/movies", MoviesRouter); //✅
-app.use("/api/discover", DiscoverRouter);//✅
-app.use("/api/tv", TvShowsRouter);//✅
-app.use("/api/payment", PaymentRouter);//✅
-app.use("/api/videos", VideoRouter);  // ❌ not verified yet
+app.use("/api/auth/", AuthRouter);
+app.use("/api/user", UserRouter); 
+app.use("/api/movies", MoviesRouter);
+app.use("/api/discover", DiscoverRouter);
+app.use("/api/tv", TvShowsRouter);
+app.use("/api/payment", PaymentRouter);
+app.use("/api/videos", VideoRouter);
 
 // Conditional DB connection and server startup
 async function startServer() {
   // Only connect to DB in development mode
-  if (process.env.NODE_ENV !== 'test') {
+  if (process.env.NODE_ENV !== "test") {
     /***********************************Connection*********************************/
     const dbLink = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.xpchg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
     console.log("Connection to server");
@@ -76,16 +76,19 @@ async function startServer() {
       })
       .catch((err) => console.log("Error connecting to the database:", err));
   }
-  const PORT = process.env.NODE_ENV === 'test' ? 5000 : process.env.PORT || 3400;
-  
+  const PORT =
+    process.env.NODE_ENV === "test" ? 5000 : process.env.PORT || 3400;
+
   app.listen(PORT, () => {
-    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+    console.log(
+      `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+    );
   });
 }
 
 // Start server if not being required by another module (like tests)
-if (process.env.NODE_ENV != 'test') {
-    startServer();
+if (process.env.NODE_ENV != "test") {
+  startServer();
 }
 
 // Export for testing

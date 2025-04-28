@@ -2,11 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Search, ChevronDown, Mic, User } from "lucide-react";
-// Remove the inappropriate import
-// import { href, NavLink } from "react-router-dom";
 import ProfileSheet from "@/components/Section/ProfileSheet";
 import { useSelector } from "react-redux";
 
@@ -24,6 +22,23 @@ export default function Header() {
   const { user, isLoggedIn } = useSelector((state) => state.user);
   const activeTabKey = path.split("/")[1];
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const SearchResult = () => {
+    if (searchQuery == "") return;
+    setLoading(true);
+    router.push(`/search?query=${searchQuery}`);
+    setLoading(false);
+    setSearchQuery("");
+  }
+    if (loading) {
+      return (
+        <div className="w-full h-screen flex items-center justify-center">
+          <Loader2 className="animate-spin md:h-[50px] md:w-[50px] h-[35px] w-[35px] text-gray-300" />
+        </div>
+      );
+    }
 
   return (
     <header className="bg-[#0d0e10] py-4 w-full fixed top-0 z-50 border-b-2 border-b-zinc-600">
@@ -87,6 +102,9 @@ export default function Header() {
               className="bg-transparent outline-none w-full text-sm font-semibold text-gray-300 placeholder-gray-500"
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => (e.key === "Enter" ? SearchResult() : null)}
             />
             <Mic className="h-5 w-5 text-gray-500 ml-1 cursor-pointer" />
           </div>
