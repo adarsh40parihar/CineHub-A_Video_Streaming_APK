@@ -30,7 +30,8 @@ export default function Header() {
     setLoading(true);
     router.push(`/search?query=${searchQuery}`);
     setLoading(false);
-    setSearchQuery("");
+    setIsSearchFocused(false);
+    document.activeElement.blur();
   }
     if (loading) {
       return (

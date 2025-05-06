@@ -19,20 +19,27 @@ jest.mock("../../Controllers/AuthController", () => ({
 
 jest.mock("../../Controllers/UserController", () => ({
   getUserWishList: jest.fn(),
+  getCurrentUser: jest.fn(),
+  getAllUser: jest.fn(),
+  deleteUser: jest.fn(),
+  isAdminMiddleWare: jest.fn((req, res, next) => next()),
+  addToWishList: jest.fn(),
+  deleteFromWishlist: jest.fn(),
 }));
 
-//Using express app for testing
+// Import the Express app
 const app = require("../../api.js");
 
 describe("UserRouter", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+
   describe("GET /wishList", () => {
     it("should return wishlist when authorized", async () => {
-      //input
       // Mock successful middleware authentication
-      protectRouteMiddleWare.mockImplementation((req, res, next) => next());
+      protectRouteMiddleware.mockImplementation((req, res, next) => next());
+
       // Mock wishlist response
       const mockWishlist = [{ id: 1, title: "Movie 1" }];
       getUserWishList.mockImplementation((req, res) => {
@@ -43,14 +50,17 @@ describe("UserRouter", () => {
       });
 
       const response = await request(app).get("/api/user/wishList");
+
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
         data: mockWishlist,
         status: "success",
       });
     });
+
     it("should handle errors in getUserWishList", async () => {
-      protectRouteMiddleWare.mockImplementation((req, res, next) => next());
+      protectRouteMiddleware.mockImplementation((req, res, next) => next());
+
       // Mock error in getUserWishList
       getUserWishList.mockImplementation((req, res) => {
         res.status(500).json({
@@ -58,7 +68,7 @@ describe("UserRouter", () => {
           status: "failure",
         });
       });
-      // run
+
       const response = await request(app).get("/api/user/wishList");
 
       expect(response.status).toBe(500);

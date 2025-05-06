@@ -87,9 +87,10 @@ async function startServer() {
 }
 
 // Start server if not being required by another module (like tests)
-if (process.env.NODE_ENV != "test") {
+// and Only start the server if this file is run directly
+if ((require.main === module || process.env.NODE_ENV) != "test") {
   startServer();
 }
 
 // Export for testing
-module.exports = { app };
+module.exports = app;
