@@ -40,7 +40,6 @@ function WishListButton({wishlist}) {
         const res = await api.post(ENDPOINT.addToWishlist,wishlist);
         if (res.data.status == "success") {
           dispatch(actions.userLoggedInDetails(res.data.user));
-          ShowToast(ToastStatus.Success, "Added to Wishlist");
           setTick(true);
         }
       } catch (err) {
@@ -57,7 +56,6 @@ function WishListButton({wishlist}) {
           const res = await api.delete(ENDPOINT.deleteFromWishlist, { data: { id: wishlist.id } });
           if (res.data.status == "success") {
             dispatch(actions.userLoggedInDetails(res.data.user));
-            ShowToast(ToastStatus.Success, "Removed from Wishlist");
             setTick(false);
           }
         } catch (err) {
@@ -70,7 +68,7 @@ function WishListButton({wishlist}) {
     <div>
       {tick ? (
         <Button
-          className={`sm:ml-auto bg-green-500 hover:bg-green-600${
+          className={`sm:ml-auto bg-green-500 hover:bg-green-600 ${
             loading ? "cursor-not-allowed" : "cursor-pointer"
           }`}
           onClick={deleteFromWishlist}
@@ -78,9 +76,9 @@ function WishListButton({wishlist}) {
           {loading ? (
             <Loader className="w-4 h-4 mr-2 animate-spin" />
           ) : (
-            <Check className="w-4 h-4 mr-1 text-green-950" />
+            <Check className="w-4 h-4 mr-[2px] text-green-950" />
           )}
-          <p className='text-green-900'>Watchlist </p>
+          <p className="text-green-900">Watchlist </p>
         </Button>
       ) : (
         <Button
@@ -92,7 +90,7 @@ function WishListButton({wishlist}) {
           {loading ? (
             <Loader className="w-4 h-4 mr-2 animate-spin" />
           ) : (
-            <PlusIcon className="w-4 h-4 mr-1" />
+            <PlusIcon className="w-4 h-4 mr-[2px]" />
           )}
           Watchlist
         </Button>

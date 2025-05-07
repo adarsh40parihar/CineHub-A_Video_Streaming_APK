@@ -110,16 +110,18 @@ function SheetSide() {
               </Button>
             ) : (
               <Link
-                href={"/login"}
-                className="rounded-full font-semibold mt-4 text-base px-4 py-2 bg-pink-600"
+                  href={"/login"}
+                >
+                  <Button
                 onClick={() => {
                   setOpen(false);
                 }}
+                className="rounded-full font-semibold mt-4 text-base px-4 py-2 bg-pink-600"
               >
-                <div className="flex gap-1 items-center justify-center">
-                  Login
-                  <LogInIcon className="h-5" />
-                </div>
+                {" "}
+                <LogInIcon className="w-5 h-5" />
+                Login
+              </Button>                
               </Link>
             )}
           </div>

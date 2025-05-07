@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRazorpay } from "react-razorpay";
 import UserSlice from "@/components/Redux/Slice/UserSlice";
+import { Button } from "@/components/ui/button";
 const actions = UserSlice.actions;
 
 const offers = [
@@ -172,15 +173,15 @@ function Subscription() {
             ))}
           </div>
           {activePrice ? (
-            <button
-              className="bg-pink-600 hover:bg-pink-800 p-3 md:mt-10 flex items-center justify-center font-medium rounded-lg ml-2"
+            <Button
+              className="p-3 md:mt-10 text-base text-gray-200 flex items-center justify-center font-medium rounded-lg ml-2"
               onClick={handlePaymentClick}
             >
               Continue & Pay
               {loading && (
-                <LucideLoader2 className="animate-spin ml-1 w-4 h-4" />
+                <LucideLoader2 className="animate-spin w-5 h-5" />
               )}
-            </button>
+            </Button>
           ) : (
             ""
           )}

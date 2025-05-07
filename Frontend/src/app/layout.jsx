@@ -39,9 +39,9 @@ export default function RootLayout({ children }) {
             <main className="mt-[72px]">{children}</main>
             <Footer />
             <ToastContainer
-              position="top-center"
+              position="top-right"
               autoClose={1500}
-              hideProgressBar={false}
+              hideProgressBar={true}
               newestOnTop
               closeOnClick
               rtl={false}
@@ -56,8 +56,8 @@ export default function RootLayout({ children }) {
               }}
               toastStyle={{
                 fontSize: "16px",
-                padding: "15px 18px",
-                minHeight: "65px",
+                padding: "13px 15px",
+                minHeight: "55px",
                 backgroundColor: "rgba(17, 17, 17, 0.95)", // Dark theme matching Jio Cinema
                 color: "#ffffff",
                 boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)", // Enhanced shadow
