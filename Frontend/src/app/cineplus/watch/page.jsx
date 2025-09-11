@@ -9,14 +9,14 @@ import { useSearchParams } from "next/navigation";
 import React from "react";
 import { useSelector } from "react-redux";
 
-function JioPlusWatch() {
+function CinePlusWatch() {
   const searchParams = useSearchParams();
   const videoId = searchParams.get("id");
   const { user, isLoggedIn } = useSelector((state) => state.user);
   if (!isLoggedIn) {
     return (
       <div>
-        <div className="px-6 pt-7 text-2xl">Jio+ Premium Videos</div>
+        <div className="px-6 pt-7 text-2xl">Cine+ Premium Videos</div>
         <div className="flex flex-col items-center pt-20 h-[90vh] w-full gap-4">
           <FolderLockIcon
             className="w-32 h-32 text-slate-400"
@@ -65,4 +65,4 @@ function JioPlusWatch() {
   );
 }
 
-export default JioPlusWatch;
+export default CinePlusWatch;

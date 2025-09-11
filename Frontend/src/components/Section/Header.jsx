@@ -13,7 +13,7 @@ export const navLinks = [
   { name: "Movies", key: "movies", href: "/movies" },
   { name: "Tv Shows", key: "tv", href: "/tv" },
   { name: "Watchlist", key: "watchlist", href: "/watchlist" },
-  { name: "Jio+", key: "jio+", href: "/jio+" },
+  { name: "CinePlus", key: "CinePlus", href: "/cineplus" },
 ];
 
 export default function Header() {
@@ -47,11 +47,11 @@ export default function Header() {
         <div className="flex">
           <Link href="/">
             <Image
-              src="/logo.svg"
-              alt="JioCinema Logo"
-              width={136}
-              height={36}
-              className="md:h-9 md:max-w-[136px] max-w-24 mr-4"
+              src="/logo.png"
+              alt="CineHub Logo"
+              width={140}
+              height={44}
+              className="md:h-11 md:max-w-[140px] max-w-24 mr-4"
             />
           </Link>
 

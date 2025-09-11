@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion"; 
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -73,73 +74,110 @@ function Signup() {
         } finally {
             setLoading(false);
         }
-      };
+  };
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  };
   
   return (
     <div className="h-screen pb-[100px] flex items-center justify-center">
-      <Card className=" w-full max-w-sm">
-        <CardHeader>
-          <CardTitle className="text-xl">Sign Up</CardTitle>
-          <CardDescription>
-            Enter your information to create an account
-          </CardDescription>
-        </CardHeader>
-        <form onSubmit={onSubmit}>
-          <CardContent>
-            <div className="grid gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input
-                  id="name"
-                  placeholder="Your Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
+        <Card className="w-full max-w-sm">
+          <motion.div variants={itemVariants}>
+            <CardHeader>
+              <CardTitle className="text-xl">Sign Up</CardTitle>
+              <CardDescription>
+                Enter your information to create an account
+              </CardDescription>
+            </CardHeader>
+          </motion.div>
+
+          <form onSubmit={onSubmit}>
+            <CardContent>
+              <div className="grid gap-4">
+                <motion.div variants={itemVariants} className="grid gap-2">
+                  <Label htmlFor="name">Full Name</Label>
+                  <Input
+                    id="name"
+                    placeholder="Your Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                </motion.div>
+
+                <motion.div variants={itemVariants} className="grid gap-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="m@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </motion.div>
+
+                <motion.div variants={itemVariants} className="grid gap-2">
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </motion.div>
+
+                <motion.div variants={itemVariants} className="grid gap-2">
+                  <Label htmlFor="confirm-password">Confirm Password</Label>
+                  <Input
+                    id="confirm-password"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </motion.div>
+
+                <motion.div variants={itemVariants}>
+                  <Button type="submit" className="w-full">
+                    Create an account
+                    {loading && <LucideLoader2 className="animate-spin w-4 h-4" />}
+                  </Button>
+                </motion.div>
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="confirm-password">Confirm Password</Label>
-                <Input
-                  id="confirm-password"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </div>
-              <Button type="submit" className="w-full">
-                Create an account
-                {loading && <LucideLoader2 className="animate-spin w-4 h-4" />}
-              </Button>
-            </div>
-            <div className="mt-4 text-center text-sm">
-              Already have an account?{" "}
-              <Link href="/login" className="underline hover:text-[#E11D48]">
-                Sign in
-              </Link>
-            </div>
-          </CardContent>
-        </form>
-      </Card>
+
+              <motion.div 
+                variants={itemVariants}
+                className="mt-4 text-center text-sm"
+              >
+                Already have an account?{" "}
+                <Link href="/login" className="underline hover:text-[#E11D48]">
+                  Sign in
+                </Link>
+              </motion.div>
+            </CardContent>
+          </form>
+        </Card>
+      </motion.div>
     </div>
   );
 }

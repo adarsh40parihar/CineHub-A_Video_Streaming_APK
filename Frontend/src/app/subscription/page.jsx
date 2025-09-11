@@ -72,7 +72,7 @@ function Subscription() {
         key: process.env.NEXT_PUBLIC_KEY_ID ?? "",
         amount: res.data.amount,
         currency: "INR",
-        name: "Jio PVT LTD.",
+        name: "CineHub PVT LTD.",
         description: `${
           activePrice === "29" ? "Premium Monthly" : "Family"
         } Plan Subscription`,

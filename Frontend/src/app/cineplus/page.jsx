@@ -6,19 +6,19 @@ import Link from "next/link";
 import React from "react";
 
 
-async function JioPlus() {
+async function CinePlus() {
   const videos = (await api.get(ENDPOINT.fetchAllStreamingVideos)).data?.data;
 
     return (
       <main className="h-screen p-8">
-        <h1 className="text-2xl font-medium mb-6">Jio+ Premium Videos</h1>
+        <h1 className="text-2xl font-medium mb-6">CinePlus Premium Videos</h1>
         <ul
           className={cn("flex gap-4 w-full overflow-scroll scrollbar-hide p-4")}
         >
           {videos?.map((video, index) => (
             <Link
               key={index}
-              href={`jio+/watch?id=${video.id}`}
+              href={`cineplus/watch?id=${video.id}`}
               className="relative flex items-center justify-center"
             >
               <Image
@@ -36,4 +36,4 @@ async function JioPlus() {
       </main>
     );
 }
-export default JioPlus;
+export default CinePlus;

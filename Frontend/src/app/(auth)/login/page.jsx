@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -65,59 +66,102 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  };
 
   return (
     <div className="h-screen pb-[150px] flex items-center justify-center">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle className="text-2xl ">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account.
-          </CardDescription>
-        </CardHeader>
-        <form onSubmit={onSubmit}>
-          <CardContent className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button type="submit" className="w-full">
-              Sign in
-              {loading && <LucideLoader2 className="animate-spin w-4 h-4" />}
-            </Button>
-          </CardFooter>
-        </form>
-        <div className="mt-4 text-center text-sm pb-6 flex justify-between px-6">
-          <Link href="/resetPassword" className="hover:text-[#E11D48]">
-            Forgot Password?
-          </Link>
-          <div>
-            Need an account?{" "}
-            <Link href="/signup" className="underline hover:text-[#E11D48]">
-              Sign Up
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
+        <Card className="w-full max-w-sm">
+          <motion.div variants={itemVariants}>
+            <CardHeader>
+              <CardTitle className="text-2xl">Login</CardTitle>
+              <CardDescription>
+                Enter your email below to login to your account.
+              </CardDescription>
+            </CardHeader>
+          </motion.div>
+
+          <form onSubmit={onSubmit}>
+            <CardContent className="flex flex-col gap-4">
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-col gap-2"
+              >
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </motion.div>
+
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-col gap-2"
+              >
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </motion.div>
+            </CardContent>
+
+            <motion.div variants={itemVariants}>
+              <CardFooter>
+                <Button type="submit" className="w-full">
+                  Sign in
+                  {loading && (
+                    <LucideLoader2 className="animate-spin w-4 h-4" />
+                  )}
+                </Button>
+              </CardFooter>
+            </motion.div>
+          </form>
+
+          <motion.div
+            variants={itemVariants}
+            className="mt-4 text-center text-sm pb-6 flex justify-between px-6"
+          >
+            <Link href="/resetPassword" className="hover:text-[#E11D48]">
+              Forgot Password?
             </Link>
-          </div>
-        </div>
-      </Card>
+            <div>
+              Need an account?{" "}
+              <Link href="/signup" className="underline hover:text-[#E11D48]">
+                Sign Up
+              </Link>
+            </div>
+          </motion.div>
+        </Card>
+      </motion.div>
     </div>
   );
 }

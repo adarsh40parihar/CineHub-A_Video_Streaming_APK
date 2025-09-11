@@ -109,19 +109,17 @@ function SheetSide() {
                 SignOut
               </Button>
             ) : (
-              <Link
-                  href={"/login"}
+              <Link href={"/login"}>
+                <Button
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                  className="rounded-full font-semibold mt-4 text-base px-4 py-2 bg-pink-600"
                 >
-                  <Button
-                onClick={() => {
-                  setOpen(false);
-                }}
-                className="rounded-full font-semibold mt-4 text-base px-4 py-2 bg-pink-600"
-              >
-                {" "}
-                <LogInIcon className="w-5 h-5" />
-                Login
-              </Button>                
+                  {" "}
+                  <LogInIcon className="w-5 h-5" />
+                  Login
+                </Button>
               </Link>
             )}
           </div>
@@ -159,6 +157,7 @@ function SheetSide() {
             Help and Legal
             <ChevronRightIcon className="w-6 h-6" />
           </Link>
+          <div className="flex justify-center items-center text-sm text-gray-400 py-2">Built with ❤️ by Adarsh Parihar</div>
         </div>
       </SheetContent>
     </Sheet>

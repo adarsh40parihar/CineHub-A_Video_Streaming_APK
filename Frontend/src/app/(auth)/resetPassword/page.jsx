@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogOverlay } from "@/components/ui/dialog";
-
+import { motion } from "framer-motion";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
@@ -107,97 +107,166 @@ function ResetPassword() {
       setLoading(false);
     }
   };
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
+      },
+    },
+  };
 
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  };
+
+  const dialogVariants = {
+    hidden: { scale: 0.8, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 300,
+      },
+    },
+    exit: {
+      scale: 0.8,
+      opacity: 0,
+    },
+  };
   return (
     <div>
       {loading2 ? (
-        <div className="w-full h-[90vh] flex justify-center items-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="w-full h-[90vh] flex justify-center items-center"
+        >
           <Loader2 className="animate-spin md:h-[50px] md:w-[50px] h-[35px] w-[35px] text-gray-300" />
-        </div>
+        </motion.div>
       ) : (
         <>
           <div className="h-[90vh] flex items-center justify-center">
-            <Card className="w-full max-w-sm">
-              <CardHeader>
-                <CardTitle className="text-xl">
-                  Forgot Password / Reset Password
-                </CardTitle>
-                <CardDescription>
-                  Enter your email below to get OTP.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="grid gap-2">
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    type="email"
-                    placeholder="m@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                  <Button className="mt-6" onClick={handleForgetPassword}>
-                    Send OTP
-                    {loading && (
-                      <LucideLoader2 className="animate-spin ml-2 w-4 h-4" />
-                    )}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={containerVariants}
+            >
+              <Card className="w-full max-w-sm">
+                <motion.div variants={itemVariants}>
+                  <CardHeader>
+                    <CardTitle className="text-xl">
+                      Forgot Password / Reset Password
+                    </CardTitle>
+                    <CardDescription>
+                      Enter your email below to get OTP.
+                    </CardDescription>
+                  </CardHeader>
+                </motion.div>
+
+                <CardContent className="grid gap-2">
+                  <motion.div variants={itemVariants} className="grid gap-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      type="email"
+                      placeholder="m@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                    <Button className="mt-6" onClick={handleForgetPassword}>
+                      Send OTP
+                      {loading && (
+                        <LucideLoader2 className="animate-spin ml-2 w-4 h-4" />
+                      )}
+                    </Button>
+                  </motion.div>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
-          {/* reset Password -> hiden*/}
+
           <Dialog open={showDialog} onOpenChange={() => setShowDialog(false)}>
             <DialogOverlay>
-              {" "}
-              {/*using Overlay for dark background */}
-              <DialogContent className="p-4 bg-black rounded-lg shadow-lg">
-                <DialogHeader>
-                  <DialogTitle className="text-2xl font-bold">
-                    Reset Password
-                  </DialogTitle>
-                  <DialogDescription className="mb-2 text-sm text-gray-400 -pt-2">
-                    OTP is sent to {email}
-                  </DialogDescription>
-                </DialogHeader>
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={dialogVariants}
+              >
+                <DialogContent className="p-4 bg-black rounded-lg shadow-lg">
+                  <DialogHeader>
+                    <DialogTitle className="text-2xl font-bold">
+                      Reset Password
+                    </DialogTitle>
+                    <DialogDescription className="mb-2 text-sm text-gray-400 -pt-2">
+                      OTP is sent to {email}
+                    </DialogDescription>
+                  </DialogHeader>
 
-                <div className="grid gap-4">
-                  <Label htmlFor="otp">Enter OTP</Label>
-                  <Input
-                    type="text"
-                    placeholder="Enter OTP"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    required
-                  />
-                  <Label htmlFor="newPassword">New Password</Label>
-                  <Input
-                    type="password"
-                    placeholder="Enter new password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    required
-                  />
-                  <Label htmlFor="confirmNewPassword">
-                    Confirm New Password
-                  </Label>
-                  <Input
-                    type="password"
-                    placeholder="Confirm new password"
-                    value={confirmNewPassword}
-                    onChange={(e) => setConfirmNewPassword(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="flex justify-end mt-4">
-                  <Button type="submit" onClick={handleResetPassword}>
-                    Submit
-                    {loading && (
-                      <LucideLoader2 className="animate-spin ml-2 w-4 h-4" />
-                    )}
-                  </Button>
-                </div>
-              </DialogContent>
+                  <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="grid gap-4"
+                  >
+                    <motion.div variants={itemVariants}>
+                      <Label htmlFor="otp">Enter OTP</Label>
+                      <Input
+                        type="text"
+                        placeholder="Enter OTP"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                        required
+                      />
+                    </motion.div>
+
+                    <motion.div variants={itemVariants}>
+                      <Label htmlFor="newPassword">New Password</Label>
+                      <Input
+                        type="password"
+                        placeholder="Enter new password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        required
+                      />
+                    </motion.div>
+
+                    <motion.div variants={itemVariants}>
+                      <Label htmlFor="confirmNewPassword">
+                        Confirm New Password
+                      </Label>
+                      <Input
+                        type="password"
+                        placeholder="Confirm new password"
+                        value={confirmNewPassword}
+                        onChange={(e) => setConfirmNewPassword(e.target.value)}
+                        required
+                      />
+                    </motion.div>
+                  </motion.div>
+
+                  <motion.div
+                    variants={itemVariants}
+                    className="flex justify-end mt-4"
+                  >
+                    <Button type="submit" onClick={handleResetPassword}>
+                      Submit
+                      {loading && (
+                        <LucideLoader2 className="animate-spin ml-2 w-4 h-4" />
+                      )}
+                    </Button>
+                  </motion.div>
+                </DialogContent>
+              </motion.div>
             </DialogOverlay>
           </Dialog>
         </>

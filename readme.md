@@ -1,8 +1,8 @@
-# 🎬 CineHub-A Video Streaming APK  
+# 🎬 CineHub - Video Streaming APK  
 
 **Stream Endless Entertainment, Anytime, Anywhere, Effortlessly**  
 
-CineHub-A is a powerful **open-source video streaming framework** built with **Next.js (frontend)** and **Node.js (backend)**. It is designed to provide a **scalable, feature-rich, and modern streaming experience** with robust media delivery, authentication, and integration capabilities.  
+CineHub is a powerful **video streaming apk** built with **Next.js (frontend)** and **Node.js (backend)**. It is designed to provide a **scalable, feature-rich, and modern streaming experience** with robust media delivery, authentication, and integration capabilities.  
 
 ---
 
@@ -47,7 +47,7 @@ CineHub-A is a powerful **open-source video streaming framework** built with **N
 
 ## 📖 Overview  
 
-CineHub-A simplifies the development of engaging video platforms by providing a **ready-to-use framework** for video streaming apps.  
+CineHub simplifies the development of engaging video platforms by providing a **ready-to-use framework** for video streaming apps.  
 
 It combines **scalability, modern UI/UX, and optimized performance**, making it an ideal choice for developers who want to build Netflix-like platforms.  
 
@@ -107,7 +107,7 @@ npm test
 
 Contributions are welcome! 🎉  
 1. Fork this repo  
-2. Create a new branch (`feature/my-feature`)  
+2. Create a new branch (`feature/new-feature>`)  
 3. Commit your changes  
 4. Push to your branch and submit a **PR**  
 

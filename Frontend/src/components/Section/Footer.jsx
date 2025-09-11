@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const headings = [
   {
-    title: "JioCinema",
+    title: "CineHub",
     links: ["For You", "Sports", "Movies", "TV Shows"],
   },
   {
@@ -21,12 +21,12 @@ const downloadAppLinks = [
   {
     icon: "/googlePlay.svg",
     alt: "Google Play",
-    href: "https://apps.apple.com/in/app/jiocinema-shows-movies-more/id1067316596",
+    href: "https://apps.apple.com/in/app/",
   },
   {
     icon: "/appleStore.svg",
     alt: "App Store",
-    href: "https://apps.apple.com/in/app/jiocinema-shows-movies-more/id1067316596",
+    href: "https://apps.apple.com/in/app/",
   },
 ];
 
@@ -116,11 +116,11 @@ export default function Footer() {
 
         <div className="md:text-center text-start mt-8 flex w-full justify-between items-center bg-[#202123] py-4 px-4">
           <p className="md:text-sm text-xs">
-            Copyright © 2024 Viacom18 Media PVT LTD. All rights reserved.
+            Team CineHub ✨ Built with ❤️ by Adarsh Parihar ✨ All rights reserved.
           </p>
           <Image
-            src="/jio-logo.png"
-            alt="Jio Logo"
+            src="/cine-logo.png"
+            alt="CineHub Logo"
             width={48}
             height={48}
             className="md:h-12 md:w-12 h-10 w-10"
