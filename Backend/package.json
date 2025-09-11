@@ -1,5 +1,5 @@
 {
-  "name": "jio_cinema_backend",
+  "name": "cinehub_backend",
   "version": "1.0.0",
   "main": "api.js",
   "scripts": {

@@ -30,7 +30,8 @@ async function updateTemplateHelper(templatePath, toReplaceObject) {
   return templateContent;
 }
 
-async function emailSender(subject, templatePath, receiverEmail, toReplaceObject) {
+/*
+async function emailSender_via_Sendgrid(subject, templatePath, receiverEmail, toReplaceObject) {
   try {
     // thorugh which service you have to send the mail
     const sendGridDetails = {
@@ -48,7 +49,7 @@ async function emailSender(subject, templatePath, receiverEmail, toReplaceObject
 
     const msg = {
       to: receiverEmail,
-      from: "noreply.jiocinema@gmail.com", // Change to your verified sender
+      from: process.env.GMAIL_USER,, // Change to your verified sender
       subject: subject,
       text: `Hi ${toReplaceObject.name}, Kindly view in an HTML viewer for better readability.`,
       html: Content,
@@ -65,6 +66,53 @@ async function emailSender(subject, templatePath, receiverEmail, toReplaceObject
 }
 
 
+
+//emailSender(PathToTemplate, receiverEmail, toReplaceObject);
+module.exports = emailSender;
+
+*/
+
+// Changing to Sendgrid to Gmail for Free usages of Email
+
+async function emailSender(
+  subject,
+  templatePath,
+  receiverEmail,
+  toReplaceObject
+) {
+  try {
+    // thorugh which service you have to send the mail
+    const transportDetails = {
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS_KEY, // App password
+      },
+    };
+
+    // Read the template content and replace placeholders
+    const Content = await updateTemplateHelper(templatePath, toReplaceObject);
+
+    const msg = {
+      to: receiverEmail,
+      from: process.env.GMAIL_USER, // Change to your verified sender
+      subject: subject,
+      text: `Hi ${toReplaceObject.name}, Kindly view in an HTML viewer for better readability.`,
+      html: Content,
+    };
+
+    const transporter = nodemailer.createTransport(transportDetails);
+
+    const info = await transporter.sendMail(msg);
+    // console.log("Email sent:", info);
+    return info;
+  } catch (err) {
+    console.error("Error sending email:", err);
+    throw err;
+  }
+}
 
 //emailSender(PathToTemplate, receiverEmail, toReplaceObject);
 module.exports = emailSender;

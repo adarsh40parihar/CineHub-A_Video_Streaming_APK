@@ -38,7 +38,7 @@ const signupHandler = async function (req, res) {
       status: "Created",
     });
 
-    const subject = "Welcome to Jio, Explore new movies and TV shows.";
+    const subject = "Welcome to CineHub, Explore new movies and TV shows.";
     const toReplaceObject = { name: newUser.name };
     await emailSender(
       subject,
