@@ -84,8 +84,8 @@ async function emailSender(
     // thorugh which service you have to send the mail
     const transportDetails = {
       host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false,
       auth: {
         user: process.env.GMAIL_USER,
         pass: process.env.GMAIL_PASS_KEY, // App password
