@@ -5,7 +5,6 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 // JWT creation and verification
 const { tokenCreation, tokenVerificaton } = require("../Utility/JWT_creation_verfication");
 
-
 //signUp with Welcome message on Mail
 const signupHandler = async function (req, res) {
   try {
@@ -46,7 +45,7 @@ const signupHandler = async function (req, res) {
       newUser.email,
       toReplaceObject
     );
-    console.log("Welcome mail is sent");
+    // console.log("Welcome mail is sent");
   } catch (err) {
     res.status(500).json({
       message: err.message,
@@ -195,7 +194,7 @@ const forgetPasswordHandler = async (req, res) => {
 
     // // 5. Send the reset URL with the token
     // const resetURL = `http://localhost:3000/api/auth/resetPassword/${resetToken}`;
-    const resetURL = `http://localhost:3000/api/auth/resetPassword/${user._id}`;
+    // const resetURL = `http://localhost:3000/api/auth/resetPassword/${user._id}`;
 
     res.status(200).json({
       message: "OTP is send successfully",
@@ -210,7 +209,7 @@ const forgetPasswordHandler = async (req, res) => {
       user.email,
       toReplaceObject
     );
-    console.log("OTP is sent successfully");
+    // console.log("OTP is sent successfully");
 
   } catch (err) {
     return res.status(500).json({

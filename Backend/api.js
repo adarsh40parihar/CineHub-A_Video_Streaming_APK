@@ -13,7 +13,7 @@ dotenv.config();
 
 const limiter = rateLimiter({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  limit: 20000, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+  limit: 2000, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
   standardHeaders: "draft-8", // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
   // store: ... , // Redis, Memcached, etc. See below.
@@ -61,6 +61,12 @@ app.use("/api/discover", DiscoverRouter);
 app.use("/api/tv", TvShowsRouter);
 app.use("/api/payment", PaymentRouter);
 app.use("/api/videos", VideoRouter);
+
+//health check
+app.get("/health", (req, res) => {
+    res.status(200).json({"message": "Every thing is fine."});
+});
+
 
 // Conditional DB connection and server startup
 async function startServer() {
