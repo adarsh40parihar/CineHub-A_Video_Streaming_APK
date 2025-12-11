@@ -73,6 +73,3 @@ export function getWatchURL(vidId, mediaType, poster_path) {
 }
 
 export const getStreamingVideoThumbanial = (id) => API_BASE_URL + ENDPOINT.fetchVideoThumbnail(id);
-
-
-
